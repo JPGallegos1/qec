@@ -28,6 +28,26 @@ Landing, archivo editorial y newsletter quincenal para QEC. El MVP usa archivos 
 - Las variables privadas de Resend deben cargarse como Worker Secrets; nunca se incluyen en `wrangler.jsonc`.
 - Al incorporar el dominio definitivo, hay que actualizar `SITE_URL`, los hostnames de Turnstile y volver a desplegar.
 
+### Variables en Cloudflare
+
+En **Workers & Pages > qec > Settings > Variables and Secrets**, cargar como **Secrets**:
+
+- `RESEND_API_KEY`
+- `RESEND_FROM`
+- `RESEND_REPLY_TO`
+- `QEC_EDITOR_EMAIL`
+
+Sin esos secretos los formularios quedan intencionalmente deshabilitados y responden `503`. No usar variables públicas ni `wrangler.jsonc` para valores de Resend.
+
+Si el despliegue se configura con Git mediante **Workers Builds**, cargar en **Workers & Pages > qec > Settings > Builds > Environment variables**:
+
+- `SITE_URL`
+- `PUBLIC_CONTACT_EMAIL`
+- `PUBLIC_POSTHOG_KEY`
+- `PUBLIC_POSTHOG_HOST`
+
+Estas últimas son variables de build: `SITE_URL` genera canonicales y sitemap; los valores `PUBLIC_*` se compilan en el frontend y no pueden contener secretos.
+
 ## Contenido
 
 Las ediciones viven en `src/content/issues/` y se validan con `src/content.config.ts`. La edición cero es una demostración explícita y no contiene noticias reales.
