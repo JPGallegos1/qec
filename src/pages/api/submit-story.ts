@@ -23,9 +23,9 @@ export const POST: APIRoute = async ({ request }) => {
   }
   if (body.consent !== true) return jsonResponse({ message: 'Necesitamos tu consentimiento para evaluar el envío.' }, 400);
 
-  const apiKey = import.meta.env.RESEND_API_KEY;
-  const from = import.meta.env.RESEND_FROM;
-  const editorEmail = import.meta.env.QEC_EDITOR_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM;
+  const editorEmail = process.env.QEC_EDITOR_EMAIL;
   if (!apiKey || !from || !editorEmail) {
     return jsonResponse({ message: 'El buzón editorial todavía no está configurado.' }, 503);
   }

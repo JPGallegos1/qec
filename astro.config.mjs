@@ -1,21 +1,21 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-import tailwindcss from '@tailwindcss/vite';
+import cloudflare from '@astrojs/cloudflare';
 
-import node from '@astrojs/node';
+import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || 'http://localhost:4321',
+  site: process.env.SITE_URL || 'https://qec.jpgallegos20.workers.dev',
   vite: {
     plugins: [tailwindcss()]
   },
 
-  adapter: node({
-    mode: 'standalone'
+  adapter: cloudflare({
+    imageService: 'compile'
   }),
 
   integrations: [sitemap()]

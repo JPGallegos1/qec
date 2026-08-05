@@ -9,13 +9,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "astro check",
+    "deploy": "astro build && wrangler deploy",
     "email:dev": "email dev --dir src/emails",
     "preview": "astro preview",
-    "start": "node ./dist/server/entry.mjs",
+    "types": "wrangler types --include-runtime false",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^11.0.3",
+    "@astrojs/cloudflare": "14.1.7",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/hanken-grotesk": "^5.3.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
@@ -35,6 +36,7 @@
     "@types/node": "^26.1.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "4.119.0"
   }
 }

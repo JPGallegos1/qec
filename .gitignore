@@ -2,6 +2,9 @@
 dist/
 # generated types
 .astro/
+# Cloudflare local state and diagnostics
+.wrangler/
+*.cpuprofile
 
 # dependencies
 node_modules/

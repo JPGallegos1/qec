@@ -17,10 +17,10 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ message: 'Revisá el mensaje y el email.' }, 400);
   }
 
-  const apiKey = import.meta.env.RESEND_API_KEY;
-  const from = import.meta.env.RESEND_FROM;
-  const replyTo = email || import.meta.env.RESEND_REPLY_TO;
-  const editorEmail = import.meta.env.QEC_EDITOR_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.RESEND_FROM;
+  const replyTo = email || process.env.RESEND_REPLY_TO;
+  const editorEmail = process.env.QEC_EDITOR_EMAIL;
   if (!apiKey || !from || !replyTo || !editorEmail) {
     return jsonResponse({ message: 'El buzón de feedback todavía no está configurado.' }, 503);
   }

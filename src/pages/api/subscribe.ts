@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!isEmail(email)) return jsonResponse({ message: 'Ingresá un email válido.' }, 400);
   if (body.consent !== true) return jsonResponse({ message: 'Necesitamos tu consentimiento para suscribirte.' }, 400);
 
-  const apiKey = import.meta.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return jsonResponse({ message: 'La suscripción todavía no está conectada a Resend.' }, 503);
 
   const resend = new Resend(apiKey);

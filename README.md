@@ -10,6 +10,7 @@ Landing, archivo editorial y newsletter quincenal para QEC. El MVP usa archivos 
 - React Email 6
 - Resend
 - PostHog
+- Cloudflare Workers
 - pnpm
 
 ## Desarrollo
@@ -17,7 +18,15 @@ Landing, archivo editorial y newsletter quincenal para QEC. El MVP usa archivos 
 1. Copiá `.env.example` como `.env` y completá las variables.
 2. Ejecutá `pnpm dev` para la web.
 3. Ejecutá `pnpm email:dev` para previsualizar `src/emails/issue-zero.tsx`.
-4. Ejecutá `pnpm check` y `pnpm build` antes de desplegar.
+4. Ejecutá `pnpm types`, `pnpm check` y `pnpm build` antes de desplegar.
+
+## Despliegue
+
+- `pnpm deploy` publica el sitio y sus endpoints en Cloudflare Workers.
+- El despliegue temporal está disponible en `https://qec.jpgallegos20.workers.dev`.
+- `SITE_URL` debe coincidir con el hostname publicado antes de construir para generar canonicales y sitemap correctos.
+- Las variables privadas de Resend deben cargarse como Worker Secrets; nunca se incluyen en `wrangler.jsonc`.
+- Al incorporar el dominio definitivo, hay que actualizar `SITE_URL`, los hostnames de Turnstile y volver a desplegar.
 
 ## Contenido
 
