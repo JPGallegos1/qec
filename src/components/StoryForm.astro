@@ -1,0 +1,116 @@
+<form
+  class="story-form"
+  action="/api/submit-story"
+  method="post"
+  data-qec-form="story"
+  data-start-event="story_submission_started"
+  data-complete-event="story_submitted"
+>
+  <div class="story-form__short">
+    <div class="field">
+      <label for="story-name">Tu nombre</label>
+      <input id="story-name" name="name" autocomplete="name" maxlength="80" required />
+    </div>
+    <div class="field">
+      <label for="story-email">Tu email</label>
+      <input id="story-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="180" required />
+    </div>
+  </div>
+  <div class="story-form__short">
+    <div class="field">
+      <label for="story-project">Startup o proyecto</label>
+      <input id="story-project" name="project" maxlength="120" required />
+    </div>
+    <div class="field">
+      <label for="story-category">Categoría</label>
+      <select id="story-category" name="category" required>
+        <option value="">Elegí una</option>
+        <option value="startup">Startup</option>
+        <option value="indie">Proyecto indie</option>
+        <option value="video">Video o podcast</option>
+        <option value="other">Otra señal</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label for="story-url">Fuente original</label>
+    <input id="story-url" name="url" type="url" inputmode="url" placeholder="https://" maxlength="500" required />
+  </div>
+  <div class="field">
+    <label for="story-summary">¿Qué pasó concretamente?</label>
+    <textarea id="story-summary" name="summary" maxlength="1200" placeholder="Contanos qué lanzaron, avanzaron o aprendieron. Incluí fecha y contexto argentino." required></textarea>
+  </div>
+  <div class="sr-only" aria-hidden="true">
+    <label for="story-role">Cargo</label>
+    <input id="story-role" name="role" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+  <label class="consent">
+    <input name="consent" type="checkbox" required />
+    <span>Acepto que QEC use estos datos para evaluar y contactar sobre esta novedad. Enviar no garantiza publicación.</span>
+  </label>
+  <div class="story-form__submit">
+    <button class="button" type="submit" data-loading-label="Enviando a la mesa...">Enviar novedad</button>
+    <p class="form-status" data-form-status role="status" aria-live="polite">Revisamos cada envío de forma manual.</p>
+  </div>
+</form>
+
+<style>
+  .story-form {
+    display: grid;
+    gap: 16px;
+  }
+
+  .story-form__short {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 17px;
+  }
+
+  .story-form__submit {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .story-form__submit :global(.form-status) {
+    color: var(--color-night-muted);
+  }
+
+  .story-form :global(.field label),
+  .story-form :global(.consent) {
+    color: var(--color-night-muted);
+  }
+
+  .story-form :global(.field input),
+  .story-form :global(.field textarea),
+  .story-form :global(.field select) {
+    border-color: var(--color-night-line);
+    background: var(--color-night-surface);
+    color: var(--color-night-ink);
+  }
+
+  .story-form :global(.field input::placeholder),
+  .story-form :global(.field textarea::placeholder) {
+    color: var(--color-night-muted);
+  }
+
+  .story-form :global(.button) {
+    background: var(--color-night-brand);
+    color: var(--color-night);
+  }
+
+  .story-form :global(.button:hover) {
+    background: #ff7d52;
+    color: var(--color-night);
+  }
+
+  @media (max-width: 620px) {
+    .story-form__short {
+      grid-template-columns: 1fr;
+    }
+
+    .story-form__submit {
+      display: grid;
+    }
+  }
+</style>

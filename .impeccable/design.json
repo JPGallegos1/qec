@@ -1,0 +1,435 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-05T00:56:04.8518508-03:00",
+  "title": "Design System: Que Estan Construyendo",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel calido",
+        "canonical": "#faf6ef",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#e7dfd1", "#faf6ef"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Hoja blanca",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#15120e", "#352e28", "#625a52", "#8c8378", "#c9bfb2", "#e7dfd1", "#f4eee3", "#ffffff"]
+      },
+      "surface-soft": {
+        "role": "neutral",
+        "displayName": "Papel secundario",
+        "canonical": "#f4eee3",
+        "tonalRamp": ["#15120e", "#352e28", "#625a52", "#8c8378", "#c9bfb2", "#e7dfd1", "#f4eee3", "#fffaf3"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta editorial",
+        "canonical": "#1c1815",
+        "tonalRamp": ["#15120e", "#1c1815", "#352e28", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Texto atenuado accesible",
+        "canonical": "#6f675e",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#625a52", "#6f675e", "#9d958b", "#c9bfb2", "#f4eee3"]
+      },
+      "muted-visual": {
+        "role": "neutral",
+        "displayName": "Atenuado visual",
+        "canonical": "#8c8378",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#6f675e", "#8c8378", "#b2a99e", "#d8d0c5", "#f4eee3"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Regla de papel",
+        "canonical": "#e7dfd1",
+        "tonalRamp": ["#1c1815", "#352e28", "#625a52", "#8c8378", "#b5aca0", "#c9bfb2", "#e7dfd1", "#faf6ef"]
+      },
+      "brand-tint": {
+        "role": "primary",
+        "displayName": "Naranja papel",
+        "canonical": "#fbece0",
+        "tonalRamp": ["#3a1208", "#6c220d", "#96300f", "#b23c12", "#d64a1e", "#e5571f", "#f2a17e", "#fbece0"]
+      },
+      "brand": {
+        "role": "primary",
+        "displayName": "Naranja editorial",
+        "canonical": "#e5571f",
+        "tonalRamp": ["#3a1208", "#6c220d", "#96300f", "#b23c12", "#d64a1e", "#e5571f", "#f2a17e", "#fbece0"]
+      },
+      "brand-strong": {
+        "role": "primary",
+        "displayName": "Naranja editorial fuerte",
+        "canonical": "#d64a1e",
+        "tonalRamp": ["#3a1208", "#6c220d", "#96300f", "#b23c12", "#d64a1e", "#e5571f", "#f2a17e", "#fbece0"]
+      },
+      "brand-deep": {
+        "role": "primary",
+        "displayName": "Naranja editorial profundo",
+        "canonical": "#b23c12",
+        "tonalRamp": ["#3a1208", "#6c220d", "#96300f", "#b23c12", "#d64a1e", "#e5571f", "#f2a17e", "#fbece0"]
+      },
+      "brand-hover": {
+        "role": "primary",
+        "displayName": "Naranja de accion hover",
+        "canonical": "#8f2e0d",
+        "tonalRamp": ["#3a1208", "#6c220d", "#8f2e0d", "#b23c12", "#d64a1e", "#e5571f", "#f2a17e", "#fbece0"]
+      },
+      "info": {
+        "role": "secondary",
+        "displayName": "Azul informativo",
+        "canonical": "#1f5fa8",
+        "tonalRamp": ["#0a2038", "#12385f", "#1f5fa8", "#4d7fba", "#7fa4cc", "#b1c6de", "#e6eef7", "#f5f8fc"]
+      },
+      "info-tint": {
+        "role": "secondary",
+        "displayName": "Azul informativo papel",
+        "canonical": "#e6eef7",
+        "tonalRamp": ["#0a2038", "#12385f", "#1f5fa8", "#4d7fba", "#7fa4cc", "#b1c6de", "#e6eef7", "#f5f8fc"]
+      },
+      "success": {
+        "role": "secondary",
+        "displayName": "Verde de exito",
+        "canonical": "#2f7a4f",
+        "tonalRamp": ["#10271a", "#1d4b30", "#2f7a4f", "#57966d", "#82b293", "#add0b8", "#e3f0e8", "#f5faf7"]
+      },
+      "success-tint": {
+        "role": "secondary",
+        "displayName": "Verde de exito papel",
+        "canonical": "#e3f0e8",
+        "tonalRamp": ["#10271a", "#1d4b30", "#2f7a4f", "#57966d", "#82b293", "#add0b8", "#e3f0e8", "#f5faf7"]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Rojo de error",
+        "canonical": "#c8392b",
+        "tonalRamp": ["#3b0e0a", "#711b14", "#a32920", "#c8392b", "#da6b60", "#e99e97", "#fae6e3", "#fff6f4"]
+      },
+      "danger-tint": {
+        "role": "tertiary",
+        "displayName": "Rojo de error papel",
+        "canonical": "#fae6e3",
+        "tonalRamp": ["#3b0e0a", "#711b14", "#a32920", "#c8392b", "#da6b60", "#e99e97", "#fae6e3", "#fff6f4"]
+      },
+      "night": {
+        "role": "neutral",
+        "displayName": "Noche editorial",
+        "canonical": "#15120e",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "night-surface": {
+        "role": "neutral",
+        "displayName": "Hoja nocturna",
+        "canonical": "#1e1a15",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Tinta nocturna",
+        "canonical": "#f3ede3",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "night-muted": {
+        "role": "neutral",
+        "displayName": "Tinta nocturna atenuada",
+        "canonical": "#948b7e",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "night-brand": {
+        "role": "primary",
+        "displayName": "Naranja nocturno",
+        "canonical": "#f2693a",
+        "tonalRamp": ["#3a1208", "#6c220d", "#a33418", "#d64a1e", "#e5571f", "#f2693a", "#ff7d52", "#ffe8de"]
+      },
+      "night-brand-hover": {
+        "role": "primary",
+        "displayName": "Naranja nocturno hover",
+        "canonical": "#ff7d52",
+        "tonalRamp": ["#3a1208", "#6c220d", "#a33418", "#d64a1e", "#e5571f", "#f2693a", "#ff7d52", "#ffe8de"]
+      },
+      "night-line": {
+        "role": "neutral",
+        "displayName": "Regla nocturna",
+        "canonical": "#2d2822",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "ink-hover": {
+        "role": "neutral",
+        "displayName": "Tinta hover",
+        "canonical": "#352e28",
+        "tonalRamp": ["#15120e", "#1c1815", "#352e28", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "editorial-copy-strong": {
+        "role": "neutral",
+        "displayName": "Cuerpo editorial fuerte",
+        "canonical": "#514a43",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#625a52", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "editorial-copy": {
+        "role": "neutral",
+        "displayName": "Cuerpo editorial",
+        "canonical": "#5f584f",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#5f584f", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "editorial-copy-soft": {
+        "role": "neutral",
+        "displayName": "Cuerpo editorial suave",
+        "canonical": "#625a52",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#625a52", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "editorial-copy-muted": {
+        "role": "neutral",
+        "displayName": "Cuerpo editorial atenuado",
+        "canonical": "#6c645b",
+        "tonalRamp": ["#15120e", "#2d2822", "#514a43", "#625a52", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "warm-copy": {
+        "role": "neutral",
+        "displayName": "Cuerpo calido",
+        "canonical": "#654d40",
+        "tonalRamp": ["#2e140a", "#4a281b", "#654d40", "#8a6754", "#b58c74", "#d5b39d", "#efd8c8", "#fbece0"]
+      },
+      "warm-copy-reject": {
+        "role": "neutral",
+        "displayName": "Cuerpo calido de rechazo",
+        "canonical": "#5c463a",
+        "tonalRamp": ["#2e140a", "#473025", "#5c463a", "#806252", "#ac826c", "#d0aa92", "#efd8c8", "#fbece0"]
+      },
+      "warm-copy-note": {
+        "role": "neutral",
+        "displayName": "Cuerpo calido de nota",
+        "canonical": "#664c3e",
+        "tonalRamp": ["#2e140a", "#4a281b", "#664c3e", "#8a6754", "#b58c74", "#d5b39d", "#efd8c8", "#fbece0"]
+      },
+      "night-copy": {
+        "role": "neutral",
+        "displayName": "Cuerpo sobre noche",
+        "canonical": "#c9bfb2",
+        "tonalRamp": ["#15120e", "#1e1a15", "#2d2822", "#514a43", "#6c645b", "#948b7e", "#c9bfb2", "#f3ede3"]
+      },
+      "warm-line": {
+        "role": "neutral",
+        "displayName": "Regla calida",
+        "canonical": "#efd8c8",
+        "tonalRamp": ["#2e140a", "#5c2715", "#8f3e20", "#b85b35", "#d98e69", "#e8cbbb", "#efd8c8", "#fbece0"]
+      },
+      "warm-line-strong": {
+        "role": "neutral",
+        "displayName": "Regla calida fuerte",
+        "canonical": "#e8cbbb",
+        "tonalRamp": ["#2e140a", "#5c2715", "#8f3e20", "#b85b35", "#d98e69", "#e8cbbb", "#efd8c8", "#fbece0"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display editorial",
+        "purpose": "Grandes afirmaciones Newsreader en hero, archivo y privacidad."
+      },
+      "headline": {
+        "displayName": "Encabezado editorial",
+        "purpose": "Titulares de seccion, paneles y previews en Newsreader."
+      },
+      "title": {
+        "displayName": "Titulo de senal",
+        "purpose": "Titulos de historias, ediciones y registros editoriales."
+      },
+      "body": {
+        "displayName": "Interfaz y cuerpo base",
+        "purpose": "Controles, navegacion y texto funcional en Hanken Grotesk."
+      },
+      "label": {
+        "displayName": "Metadato mono",
+        "purpose": "Fechas, fuentes, categorias, estados y cadence en JetBrains Mono."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-state",
+        "value": "150ms ease",
+        "purpose": "Cambio de color en botones web; no agrega desplazamiento ni elevacion."
+      },
+      {
+        "name": "linked-row-state",
+        "value": "140ms ease",
+        "purpose": "Respuesta de color en filas de archivo enlazadas."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Duracion efectiva para transiciones y animaciones cuando se solicita movimiento reducido."
+      }
+    ],
+    "breakpoints": [
+      { "name": "compact-nav-and-subscription", "value": "520px" },
+      { "name": "email", "value": "600px" },
+      { "name": "compact-forms-and-sections", "value": "620px" },
+      { "name": "issue-sheet", "value": "680px" },
+      { "name": "archive", "value": "700px" },
+      { "name": "feedback", "value": "720px" },
+      { "name": "global-shell", "value": "760px" },
+      { "name": "wide-sections", "value": "860px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Accion naranja principal sobre papel o una hoja editorial clara.",
+      "html": "<button class=\"ds-btn-primary\">Suscribirme</button>",
+      "css": ".ds-btn-primary { display:inline-flex; min-height:44px; align-items:center; justify-content:center; gap:8px; border:0; border-radius:7px; padding:11px 20px; background:var(--color-brand-deep,#b23c12); color:#fff; font:600 0.875rem/1 'Hanken Grotesk Variable','Segoe UI',sans-serif; cursor:pointer; transition:background-color 150ms ease; } .ds-btn-primary:hover,.ds-btn-primary:active { background:var(--color-brand-hover,#8f2e0d); } .ds-btn-primary:focus-visible { outline:2px solid var(--color-ink,#1c1815); outline-offset:3px; } .ds-btn-primary:disabled { background:var(--color-muted,#6f675e); cursor:wait; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Accion de tinta para un enfasis neutral y editorial.",
+      "html": "<button class=\"ds-btn-ink\">Abrir edicion</button>",
+      "css": ".ds-btn-ink { display:inline-flex; min-height:44px; align-items:center; justify-content:center; border:0; border-radius:7px; padding:11px 20px; background:var(--color-ink,#1c1815); color:#fff; font:600 0.875rem/1 'Hanken Grotesk Variable','Segoe UI',sans-serif; cursor:pointer; transition:background-color 150ms ease; } .ds-btn-ink:hover { background:#352e28; } .ds-btn-ink:focus-visible { outline:2px solid var(--color-ink,#1c1815); outline-offset:3px; } .ds-btn-ink:active { background:#15120e; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Accion secundaria blanca y delimitada para hojas claras.",
+      "html": "<button class=\"ds-btn-ghost\">Ver archivo</button>",
+      "css": ".ds-btn-ghost { display:inline-flex; min-height:44px; align-items:center; justify-content:center; border:1px solid var(--color-line,#e7dfd1); border-radius:7px; padding:11px 20px; background:var(--color-surface,#fff); color:var(--color-ink,#1c1815); font:600 0.875rem/1 'Hanken Grotesk Variable','Segoe UI',sans-serif; cursor:pointer; transition:border-color 150ms ease; } .ds-btn-ghost:hover { border-color:var(--color-ink,#1c1815); } .ds-btn-ghost:focus-visible { outline:2px solid var(--color-ink,#1c1815); outline-offset:3px; } .ds-btn-ghost:active { background:var(--color-surface-soft,#f4eee3); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Campo blanco con etiqueta mono explicita y foco naranja.",
+      "html": "<label class=\"ds-field\"><span>Tu email</span><input type=\"email\" placeholder=\"tu@email.com\"></label>",
+      "css": ".ds-field { display:grid; gap:6px; color:var(--color-ink,#1c1815); } .ds-field span { font:500 0.6875rem/1.2 'JetBrains Mono Variable','Courier New',monospace; letter-spacing:0.08em; text-transform:uppercase; } .ds-field input { width:100%; min-height:46px; border:1px solid var(--color-muted-visual,#8c8378); border-radius:7px; padding:10px 13px; background:var(--color-surface,#fff); color:var(--color-ink,#1c1815); font:400 0.9375rem/1.5 'Hanken Grotesk Variable','Segoe UI',sans-serif; } .ds-field input::placeholder { color:var(--color-muted,#6f675e); opacity:1; } .ds-field input:hover { border-color:var(--color-muted-visual,#8c8378); } .ds-field input:focus-visible { border-color:var(--color-brand,#e5571f); outline:2px solid var(--color-ink,#1c1815); outline-offset:3px; }"
+    },
+    {
+      "name": "Editorial Tags",
+      "kind": "chip",
+      "refersTo": "tag-default",
+      "description": "Etiquetas mono para categoria, demostracion y patrocinio explicito.",
+      "html": "<div class=\"ds-tags\"><span class=\"ds-tag\">Startup</span><span class=\"ds-tag ds-tag-demo\">Demostracion</span><span class=\"ds-tag ds-tag-sponsor\">Patrocinado</span></div>",
+      "css": ".ds-tags { display:flex; flex-wrap:wrap; align-items:center; gap:6px; } .ds-tag { display:inline-flex; align-items:center; border-radius:4px; padding:3px 7px; background:var(--color-surface-soft,#f4eee3); color:var(--color-ink,#1c1815); font:500 0.625rem/1.2 'JetBrains Mono Variable','Courier New',monospace; letter-spacing:0.08em; text-transform:uppercase; } .ds-tag-demo { background:var(--color-brand-tint,#fbece0); color:var(--color-brand-deep,#b23c12); } .ds-tag-sponsor { background:var(--color-brand-deep,#b23c12); color:#fff; }"
+    },
+    {
+      "name": "Quiet Masthead",
+      "kind": "nav",
+      "description": "Cabecera de papel con sigla naranja, nombre completo y navegacion contenida.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Navegacion de muestra\"><a class=\"ds-wordmark\" href=\"#\"><span>QEC</span><strong>Que Estan Construyendo</strong></a><div><a href=\"#\">Archivo</a><a class=\"ds-nav-action\" href=\"#\">Suscribirme</a></div></nav>",
+      "css": ".ds-nav { display:flex; min-height:64px; align-items:center; justify-content:space-between; gap:28px; border-bottom:1px solid var(--color-line,#e7dfd1); background:var(--color-paper,#faf6ef); color:var(--color-ink,#1c1815); font-family:'Hanken Grotesk Variable','Segoe UI',sans-serif; } .ds-wordmark { display:inline-flex; align-items:center; gap:10px; color:inherit; text-decoration:none; } .ds-wordmark span { display:grid; min-width:34px; height:24px; place-items:center; border-radius:5px; padding:0 6px; background:var(--color-brand-deep,#b23c12); color:#fff; font:700 0.62rem/1 'JetBrains Mono Variable','Courier New',monospace; letter-spacing:0.02em; } .ds-wordmark strong { font-size:0.9375rem; font-weight:600; letter-spacing:-0.01em; } .ds-nav div { display:flex; align-items:center; gap:24px; } .ds-nav div a { color:inherit; font-size:0.8125rem; font-weight:500; text-decoration:none; } .ds-nav div a:hover { color:var(--color-brand,#e5571f); } .ds-nav a:focus-visible { outline:2px solid var(--color-ink,#1c1815); outline-offset:3px; } .ds-nav .ds-nav-action { border-radius:7px; padding:11px 20px; background:var(--color-brand-deep,#b23c12); color:#fff; font-size:0.875rem; font-weight:600; } .ds-nav .ds-nav-action:hover { background:var(--color-brand-hover,#8f2e0d); color:#fff; }"
+    },
+    {
+      "name": "Issue Sheet",
+      "kind": "card",
+      "refersTo": "issue-sheet",
+      "description": "Hoja editorial blanca con estado, metadatos y una senal numerada.",
+      "html": "<article class=\"ds-issue\"><header><div><span class=\"ds-issue-demo\">Demostracion</span><h3>Las senales que pasaron el filtro.</h3><p>Titulo concreto, contexto breve y una fuente para verificar.</p></div><dl><div><dt>Lectura</dt><dd>5 min</dd></div><div><dt>Senales</dt><dd>4</dd></div></dl></header><div class=\"ds-signal\"><span class=\"ds-index\">01</span><div><span class=\"ds-category\">Startup</span><h4>Una senal concreta y verificable</h4><p>Contexto editorial breve para entender que cambio y por que importa.</p></div></div></article>",
+      "css": ".ds-issue { overflow:hidden; border:1px solid var(--color-line,#e7dfd1); border-radius:10px; background:var(--color-surface,#fff); color:var(--color-ink,#1c1815); } .ds-issue header { display:grid; grid-template-columns:1fr auto; gap:34px; padding:32px; border-bottom:1px solid var(--color-line,#e7dfd1); } .ds-issue-demo,.ds-category { display:inline-flex; border-radius:4px; padding:3px 7px; background:var(--color-brand-tint,#fbece0); color:var(--color-brand-deep,#b23c12); font:500 0.625rem/1.2 'JetBrains Mono Variable','Courier New',monospace; letter-spacing:0.08em; text-transform:uppercase; } .ds-issue h3 { max-width:600px; margin:14px 0 0; font:500 2.5rem/1.04 'Newsreader Variable',Georgia,'Times New Roman',serif; letter-spacing:-0.025em; } .ds-issue header p,.ds-signal p { max-width:62ch; margin:14px 0 0; color:#625a52; font:400 1rem/1.55 'Newsreader Variable',Georgia,'Times New Roman',serif; } .ds-issue dl { min-width:152px; margin:0; border-top:1px solid var(--color-line,#e7dfd1); } .ds-issue dl div { display:flex; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px solid var(--color-line,#e7dfd1); } .ds-issue dt,.ds-issue dd { margin:0; font:500 0.625rem/1.2 'JetBrains Mono Variable','Courier New',monospace; } .ds-issue dt { color:var(--color-muted,#6f675e); text-transform:uppercase; } .ds-signal { display:grid; grid-template-columns:72px 1fr; } .ds-index { display:grid; place-items:start center; border-right:1px solid var(--color-line,#e7dfd1); padding-top:31px; color:var(--color-brand,#e5571f); font:600 0.65rem/1.2 'JetBrains Mono Variable','Courier New',monospace; } .ds-signal>div { padding:28px 36px 31px; } .ds-signal h4 { margin:12px 0 6px; font:500 1.5rem/1.15 'Newsreader Variable',Georgia,'Times New Roman',serif; letter-spacing:-0.015em; } .ds-signal p { margin:0; }"
+    },
+    {
+      "name": "Cimientos Rule",
+      "kind": "custom",
+      "description": "Firma editorial de dos trazos firmes y un tercer trazo naranja corto.",
+      "html": "<span class=\"ds-cimientos\" aria-label=\"Cimientos\"><i></i><i></i><i></i></span>",
+      "css": ".ds-cimientos { display:inline-flex; align-items:center; gap:5px; } .ds-cimientos i { display:block; width:26px; height:3px; border-radius:2px; background:var(--color-ink,#1c1815); } .ds-cimientos i:nth-child(2) { background:var(--color-muted-visual,#8c8378); } .ds-cimientos i:nth-child(3) { width:13px; background:var(--color-brand,#e5571f); }"
+    },
+    {
+      "name": "Night Action",
+      "kind": "button",
+      "refersTo": "email-action",
+      "description": "Accion naranja clara sobre una superficie nocturna con tinta oscura de alto contraste.",
+      "html": "<div class=\"ds-night-field\"><button class=\"ds-night-action\">Enviar novedad</button></div>",
+      "css": ".ds-night-field { display:inline-flex; padding:24px; background:var(--color-night,#15120e); } .ds-night-action { min-height:44px; border:0; border-radius:7px; padding:11px 20px; background:var(--color-night-brand,#f2693a); color:var(--color-night,#15120e); font:600 0.875rem/1 'Hanken Grotesk Variable','Segoe UI',sans-serif; cursor:pointer; transition:background-color 150ms ease; } .ds-night-action:hover,.ds-night-action:active { background:var(--color-night-brand-hover,#ff7d52); color:var(--color-night,#15120e); } .ds-night-action:focus-visible { outline:2px solid var(--color-night-ink,#f3ede3); outline-offset:3px; }"
+    },
+    {
+      "name": "Email Signal Block",
+      "kind": "custom",
+      "description": "Traduccion email-safe de una senal con Georgia, Arial y Courier New.",
+      "html": "<section class=\"ds-email-signal\"><p class=\"ds-email-category\">01 / STARTUP</p><h2>Una senal concreta y verificable</h2><p class=\"ds-email-copy\">Contexto editorial breve y una fuente original para comprobar que cambio.</p><a href=\"#\">Abrir fuente original</a></section>",
+      "css": ".ds-email-signal { max-width:600px; padding:34px; border-bottom:1px solid #e7dfd1; background:#fff; color:#1c1815; font-family:Arial,Helvetica,sans-serif; } .ds-email-category { margin:0 0 12px; color:#d64a1e; font:700 9px/1.2 'Courier New',monospace; letter-spacing:0.8px; } .ds-email-signal h2 { margin:0 0 10px; font:400 25px/30px Georgia,'Times New Roman',serif; letter-spacing:-0.4px; } .ds-email-copy { margin:0 0 12px; color:#625a52; font:400 15px/24px Georgia,'Times New Roman',serif; } .ds-email-signal a { color:#b23c12; font-size:12px; font-weight:700; text-decoration:underline; } .ds-email-signal a:hover { color:#d64a1e; } .ds-email-signal a:focus-visible { outline:2px solid #1c1815; outline-offset:3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Publicacion argentina en papel calido",
+    "overview": "QEC se lee como una publicación independiente argentina: papel cálido alrededor, superficies editoriales blancas, titulares de tinta en serif, acciones naranjas y metadatos monoespaciados. La voz visual es serena, selectiva y material; no debe parecer un dashboard de startup ni un funnel genérico de newsletter.\n\nEl sistema cubre web y email. En web, Newsreader aporta autoridad editorial, Hanken Grotesk mantiene legibles las acciones y JetBrains Mono identifica fecha, fuente, categoría y estado. El email conserva esa relación mediante Georgia, Arial y Courier New, sin depender de webfonts. La geometría se construye con reglas finas, campos claros, contenedores de papel y el divisor de tres trazos \"cimientos\".\n\nLa expresión implementada en la landing sigue el contrato actual: una cabecera silenciosa; una gran declaración Newsreader; el tagline de cadencia inmediatamente después del titular; descripción editorial; formulario de suscripción funcional; criterio de selección; edición demostrativa; envío de novedades. Esa secuencia pertenece a esa superficie y no establece un orden de conversión obligatorio para archivo, privacidad, ediciones ni futuros productos.",
+    "keyCharacteristics": [
+      "Papel ambiental cálido y hojas editoriales blancas.",
+      "Tinta serif para lectura; sans para interfaz; mono para evidencia.",
+      "Naranja de marca reservado para acciones, estados editoriales y énfasis explícito.",
+      "Construcción plana mediante bordes de un píxel, cambios tonales y filas numeradas.",
+      "Dispositivo cimientos: dos trazos firmes y un tercer trazo naranja, corto y \"en obra\".",
+      "Traducción de email robusta, monocolumna y basada en fallbacks de sistema."
+    ],
+    "rules": [
+      {
+        "name": "The Paper Before White Rule",
+        "body": "`paper` es el mundo; `surface` es una hoja editorial contenida. No convertir todo en blanco indiferenciado.",
+        "section": "colors"
+      },
+      {
+        "name": "The Orange Has a Job Rule",
+        "body": "El naranja señala marca, acción o un estado editorial nombrado. No se usa como decoración distribuida al azar.",
+        "section": "colors"
+      },
+      {
+        "name": "The Explicit State Rule",
+        "body": "Información, éxito, error, demostración y patrocinio se entienden por texto antes que por color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Carries the Editorial Voice Rule",
+        "body": "Promesas, títulos, introducciones y resúmenes se componen en Newsreader o Georgia; controles y navegación no imitan esa voz.",
+        "section": "typography"
+      },
+      {
+        "name": "The Small Type Is Metadata Rule",
+        "body": "Los tamaños web de `0.58-0.6875rem` y email de `9-10px` son decisiones deliberadas solo para etiquetas breves, en mayúsculas, con tracking y contraste adecuados. Nunca se usan para párrafos, consentimiento largo ni información esencial sin contexto.",
+        "section": "typography"
+      },
+      {
+        "name": "The Email Hierarchy Survives Rule",
+        "body": "El email preserva contraste de escala y función tipográfica con fallbacks seguros; no depende de que carguen Newsreader, Hanken Grotesk o JetBrains Mono.",
+        "section": "typography"
+      },
+      {
+        "name": "The Medium Owns the Composition Rule",
+        "body": "Web y email comparten material, jerarquía y semántica, no una grilla idéntica.",
+        "section": "layout"
+      },
+      {
+        "name": "The Surface Owns the Story Rule",
+        "body": "La promesa, suscripción, filtro, demo y envío describen la landing actual; otras rutas pueden ordenar sus tareas según su propia lectura.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Paper Rule",
+        "body": "Si una región necesita separación, usar tono, borde o estructura editorial; no sombra, vidrio ni gradiente.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Small Radius Rule",
+        "body": "La suavidad nunca debe volver al sistema blando o app-like. Contenedores grandes se detienen en 10px y controles en 7px.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do usar papel cálido, hojas blancas, tinta serif, naranja editorial y metadatos mono como sistema coherente.",
+      "Do preservar etiquetas pequeñas solo en funciones breves de evidencia y estado; mantener el cuerpo de lectura en tamaños editoriales.",
+      "Do construir jerarquía con ritmo, reglas, filas numeradas, medidas de lectura y cambios tonales.",
+      "Do traducir la identidad al email con Georgia, Arial y Courier New, una columna y estilos compatibles.",
+      "Do usar cimientos con sus dos trazos firmes y el tercero naranja corto.",
+      "Do mantener demostración, patrocinio, consentimiento, éxito y error explícitos en palabras.",
+      "Do separar `muted` para texto secundario de `muted-visual` para bordes y decoración."
+    ],
+    "donts": [
+      "Don't hacer que QEC parezca un dashboard de startup, un SaaS genérico o un funnel intercambiable de newsletter.",
+      "Don't recuperar la antigua Bitácora de señales, su papel frío, cobalt/lime, Archivo condensada, esquinas cortadas o grilla de registro.",
+      "Don't usar sombras, glassmorphism, gradientes, blobs, pills o radios mayores a los observados.",
+      "Don't convertir el naranja en relleno decorativo o el azul informativo en una segunda marca.",
+      "Don't copiar el orden de conversión de la landing en archivo, privacidad, edición o email.",
+      "Don't depender de webfonts, hover, movimiento o layouts multicolumna para comunicar significado en email."
+    ]
+  }
+}

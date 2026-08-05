@@ -1,0 +1,117 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IssuePreview from '../../components/IssuePreview.astro';
+
+export async function getStaticPaths() {
+  const issues = await getCollection('issues', ({ data }) => !data.draft);
+  return issues.map((issue) => ({ params: { id: issue.id }, props: { issue } }));
+}
+
+interface Props {
+  issue: CollectionEntry<'issues'>;
+}
+
+const { issue } = Astro.props;
+const { Content } = await render(issue);
+---
+
+<BaseLayout title={issue.data.title} description={issue.data.description}>
+  <article class="issue-page shell">
+    <a class="issue-page__back" href="/ediciones/">Volver al archivo</a>
+    <div class="issue-page__intro prose">
+      <Content />
+    </div>
+    <IssuePreview issue={issue} />
+    <section class="feedback" aria-labelledby="feedback-title">
+      <div>
+        <h2 id="feedback-title">¿Esta edición te ahorró tiempo?</h2>
+        <p>Una línea alcanza. Leemos cada respuesta para ajustar la próxima selección.</p>
+      </div>
+      <form action="/api/feedback" method="post" data-qec-form="feedback" data-complete-event="feedback_submitted">
+        <input type="hidden" name="issue" value={issue.id} />
+        <div class="field">
+          <label for="feedback-email">Tu email (opcional)</label>
+          <input id="feedback-email" name="email" type="email" inputmode="email" autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="feedback-message">Tu respuesta</label>
+          <textarea id="feedback-message" name="message" maxlength="800" required></textarea>
+        </div>
+        <div class="sr-only" aria-hidden="true">
+          <label for="feedback-company">Empresa</label>
+          <input id="feedback-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="button" type="submit" data-loading-label="Enviando...">Enviar feedback</button>
+        <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .issue-page {
+    padding-block: 38px clamp(90px, 12vw, 150px);
+  }
+
+  .issue-page__back {
+    display: inline-block;
+    margin-bottom: 42px;
+    color: var(--color-brand-deep);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-underline-offset: 4px;
+  }
+
+  .issue-page__intro {
+    max-width: 72ch;
+    margin: 0 auto 46px;
+    color: #625a52;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  .feedback {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(44px, 9vw, 110px);
+    margin-top: 70px;
+    border: 1px solid #efd8c8;
+    border-radius: 10px;
+    padding: clamp(28px, 6vw, 58px);
+    background: var(--color-brand-tint);
+  }
+
+  .feedback h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .feedback > div p {
+    max-width: 48ch;
+    margin: 20px 0 0;
+    color: #654d40;
+    font-family: var(--font-serif);
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  .feedback form {
+    display: grid;
+    gap: 15px;
+  }
+
+  @media (max-width: 720px) {
+    .feedback {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

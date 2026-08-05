@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hola@qec.example';
+---
+
+<BaseLayout title="Privacidad" description="Cómo Qué Están Construyendo trata los datos de suscriptores y colaboradores.">
+  <article class="privacy shell">
+    <header>
+      <h1>Privacidad, sin letra chica.</h1>
+      <p>QEC recoge únicamente los datos necesarios para enviar la newsletter, recibir novedades y entender conversiones básicas.</p>
+    </header>
+    <div class="privacy__body prose prose-lg">
+      <h2>Suscripción</h2>
+      <p>Cuando te suscribís, tu email se guarda como contacto en Resend. Lo usamos para enviar QEC, gestionar entregas, rebotes, clics y bajas. Cada envío incluirá un enlace para cancelar la suscripción.</p>
+
+      <h2>Novedades y feedback</h2>
+      <p>Los formularios envían la información a la casilla editorial mediante Resend. Se usa exclusivamente para evaluar la novedad, responderte y mejorar futuras ediciones. Enviar una historia no garantiza su publicación.</p>
+
+      <h2>Analítica</h2>
+      <p>PostHog registra eventos anónimos de adquisición y conversión. La configuración inicial no identifica personas, no conserva perfiles, no usa grabaciones de sesión y mantiene la persistencia solo en memoria.</p>
+
+      <h2>Tus decisiones</h2>
+      <p>Podés darte de baja desde cualquier email o escribir a <a href={`mailto:${contactEmail}`}>{contactEmail}</a> para consultar, corregir o solicitar la eliminación de tus datos.</p>
+
+      <h2>Proveedores</h2>
+      <p>Resend procesa contactos y correo; PostHog procesa analítica web. Sus propias políticas y ubicaciones de procesamiento también aplican.</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .privacy {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(54px, 10vw, 130px);
+    padding-block: clamp(70px, 11vw, 140px);
+  }
+
+  .privacy header {
+    position: sticky;
+    top: 40px;
+    align-self: start;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(3.2rem, 7vw, 4.8rem);
+    font-weight: 500;
+    font-variation-settings: "opsz" 100;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  header p {
+    margin: 28px 0 0;
+    color: #625a52;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .privacy__body {
+    max-width: 70ch;
+    font-family: var(--font-serif);
+  }
+
+  .privacy__body :global(h2) {
+    margin-top: 2.8em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  .privacy__body :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  @media (max-width: 760px) {
+    .privacy {
+      grid-template-columns: 1fr;
+    }
+
+    .privacy header {
+      position: static;
+    }
+  }
+</style>

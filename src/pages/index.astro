@@ -1,0 +1,567 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IssuePreview from '../components/IssuePreview.astro';
+import StoryForm from '../components/StoryForm.astro';
+import SubscriptionForm from '../components/SubscriptionForm.astro';
+
+const issues = (await getCollection('issues', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const latestIssue = issues[0];
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hola@qec.example';
+---
+
+<BaseLayout pageEvent="landing_viewed">
+  <section class="hero shell" id="suscribirme" aria-labelledby="hero-title">
+    <h1 id="hero-title">Lo que se está construyendo en la tecnología argentina.</h1>
+    <p class="hero__kicker">Quincenal · Curado · Con criterio</p>
+    <p class="hero__lead">Cada dos viernes, una edición curada a mano: lanzamientos, startups, proyectos indie, comunidad y radar. Sin relleno, sin hype. Las fuentes, siempre a la vista.</p>
+    <SubscriptionForm source="hero" />
+    <div class="hero__facts" aria-label="Características de la publicación">
+      <span>Independiente</span>
+      <span>Edición cero disponible</span>
+      <span>Máximo 12 señales</span>
+    </div>
+  </section>
+
+  <section class="criteria shell" id="criterio" aria-labelledby="criteria-title">
+    <div class="section-mark" aria-hidden="true"><span class="cimientos"><i></i><i></i><i></i></span></div>
+    <div class="criteria__intro">
+      <h2 class="section-heading" id="criteria-title">Una selección corta porque entrar cuesta.</h2>
+      <p class="section-copy">Una publicación necesita al menos tres señales de calidad. Si no muestra progreso, no agrega contexto o no conduce a una fuente original, queda afuera.</p>
+    </div>
+    <ul class="criteria__list">
+      <li><span>Conexión verificable con Argentina</span><small>Territorio</small></li>
+      <li><span>Lanzamiento, avance o hecho concreto</span><small>Progreso</small></li>
+      <li><span>Relevancia para founders y operadores</span><small>Utilidad</small></li>
+      <li><span>Fuente original y reciente</span><small>Evidencia</small></li>
+      <li><span>Contexto o aprendizaje aplicable</span><small>Criterio</small></li>
+      <li><span>Ayuda a entender qué se construye</span><small>Señal</small></li>
+    </ul>
+    <div class="criteria__reject">
+      <strong>No pasa el filtro</strong>
+      <p>Listas genéricas, contenido hecho solo para SEO y promoción sin una novedad concreta.</p>
+    </div>
+  </section>
+
+  <section class="latest">
+    <div class="latest__inner shell">
+      <div class="section-mark" aria-hidden="true"><span class="cimientos"><i></i><i></i><i></i></span></div>
+      <div class="latest__intro">
+        <h2 class="section-heading" id="latest-title">Así se lee una señal bien seleccionada.</h2>
+        <p class="section-copy">Título concreto, contexto editorial breve y una fuente para verificar. La edición cero muestra el formato sin disfrazar ejemplos como noticias.</p>
+      </div>
+      <IssuePreview issue={latestIssue} compact />
+    </div>
+  </section>
+
+  <section class="submit" id="enviar" aria-labelledby="submit-title">
+    <div class="submit__inner shell">
+      <div class="submit__copy">
+        <span class="cimientos cimientos--night" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="section-heading" id="submit-title">¿Qué estás construyendo?</h2>
+        <p>Mandá el lanzamiento, avance o aprendizaje con su fuente original. Llega directo a la mesa editorial: sin panel, sin ranking automático y sin publicación garantizada.</p>
+        <dl>
+          <div><dt>Buscamos</dt><dd>Algo que cambió</dd></div>
+          <div><dt>Necesitamos</dt><dd>Una fuente original</dd></div>
+          <div><dt>Revisamos</dt><dd>Cada envío a mano</dd></div>
+        </dl>
+      </div>
+      <StoryForm />
+    </div>
+  </section>
+
+  <section class="archive shell" aria-labelledby="archive-title">
+    <div class="archive__head">
+      <div>
+        <span class="cimientos" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="section-heading" id="archive-title">Archivo abierto, memoria corta.</h2>
+      </div>
+      <a href="/ediciones/">Ver todas las ediciones</a>
+    </div>
+    <a class="archive__issue" href={`/ediciones/${latestIssue.id}/`}>
+      <span class="archive__number">Nº {String(latestIssue.data.issueNumber).padStart(2, '0')}</span>
+      <strong>{latestIssue.data.title}</strong>
+      <span>{latestIssue.data.dateLabel}</span>
+      <span class="archive__open">Abrir</span>
+    </a>
+  </section>
+
+  <section class="sponsor shell" aria-labelledby="sponsor-title">
+    <div class="sponsor__label">Sponsor fundador · propuesta experimental</div>
+    <div class="sponsor__body">
+      <div>
+        <h2 id="sponsor-title">Apoyá las primeras tres ediciones.</h2>
+        <p>Un único espacio después de la introducción, siempre identificado como patrocinado y con un reporte básico de clics siete días después.</p>
+      </div>
+      <dl>
+        <div><dt>Presencia</dt><dd>3 ediciones</dd></div>
+        <div><dt>Precio inicial</dt><dd>USD 50 total</dd></div>
+        <div><dt>Promesa</dt><dd>Apoyo temprano, no resultados masivos</dd></div>
+      </dl>
+      <a class="button" href={`mailto:${contactEmail}?subject=Sponsor%20fundador%20QEC`}>Consultar disponibilidad</a>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="closing__inner shell">
+      <div>
+        <p class="closing__meta">Quincenal · Curado · Con criterio</p>
+        <h2 class="section-heading" id="closing-title">Quince días de señales. Cinco minutos para entenderlas.</h2>
+      </div>
+      <SubscriptionForm source="closing" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    max-width: 1060px;
+    min-height: calc(100svh - 65px);
+    padding-block: clamp(70px, 11vw, 126px) 56px;
+  }
+
+  .hero__kicker {
+    margin: 22px 0 0;
+    color: var(--color-brand-deep);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    max-width: 790px;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(3.4rem, 7.8vw, 5rem);
+    font-weight: 500;
+    font-variation-settings: "opsz" 100;
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+
+  .hero__lead {
+    max-width: 62ch;
+    margin: 30px 0 32px;
+    color: #514a43;
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+
+  .hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px 24px;
+    margin-top: 20px;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .hero__facts span::before {
+    margin-right: 8px;
+    color: var(--color-brand);
+    content: "·";
+  }
+
+  .section-mark {
+    margin-bottom: 28px;
+  }
+
+  .criteria {
+    padding-block: clamp(84px, 11vw, 128px);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .criteria__intro {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: clamp(40px, 8vw, 100px);
+    align-items: end;
+    margin-bottom: 58px;
+  }
+
+  .criteria__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+    list-style: none;
+  }
+
+  .criteria__list li {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--color-line);
+    padding: 16px 18px 16px 0;
+  }
+
+  .criteria__list li:nth-child(odd) {
+    border-right: 1px solid var(--color-line);
+    padding-right: 28px;
+  }
+
+  .criteria__list li:nth-child(even) {
+    padding-left: 28px;
+  }
+
+  .criteria__list li span {
+    position: relative;
+    padding-left: 18px;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+  }
+
+  .criteria__list li span::before {
+    position: absolute;
+    top: 0.64em;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    content: "";
+  }
+
+  .criteria__list small {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .criteria__reject {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 28px;
+    margin-top: 38px;
+    border-radius: 8px;
+    padding: 18px 22px;
+    background: var(--color-brand-tint);
+  }
+
+  .criteria__reject strong {
+    color: var(--color-brand-deep);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .criteria__reject p {
+    margin: 0;
+    color: #5c463a;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+  }
+
+  .latest {
+    padding-block: clamp(84px, 11vw, 128px);
+    border-block: 1px solid var(--color-line);
+    background: var(--color-surface-2);
+  }
+
+  .latest__intro {
+    display: grid;
+    grid-template-columns: 1fr 0.8fr;
+    gap: clamp(40px, 8vw, 100px);
+    align-items: end;
+    margin-bottom: 46px;
+  }
+
+  .submit {
+    padding-block: clamp(86px, 11vw, 130px);
+    background: var(--color-night);
+    color: var(--color-night-ink);
+  }
+
+  .submit__inner {
+    display: grid;
+    grid-template-columns: 0.78fr 1.22fr;
+    gap: clamp(52px, 9vw, 120px);
+  }
+
+  .submit .section-heading {
+    margin-top: 26px;
+    color: var(--color-night-ink);
+  }
+
+  .submit__copy > p {
+    max-width: 48ch;
+    margin: 22px 0 34px;
+    color: #c9bfb2;
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.6;
+  }
+
+  .cimientos--night i:first-child {
+    background: var(--color-night-ink);
+  }
+
+  .cimientos--night i:nth-child(2) {
+    background: var(--color-night-muted);
+  }
+
+  .cimientos--night i:nth-child(3) {
+    background: var(--color-night-brand);
+  }
+
+  .submit__copy dl {
+    margin: 0;
+    border-top: 1px solid var(--color-night-line);
+  }
+
+  .submit__copy dl div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-night-line);
+  }
+
+  .submit__copy dt {
+    color: var(--color-night-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .submit__copy dd {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .archive {
+    padding-block: clamp(84px, 11vw, 128px);
+  }
+
+  .archive__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 44px;
+  }
+
+  .archive__head .section-heading {
+    margin-top: 24px;
+  }
+
+  .archive__head > a {
+    flex: none;
+    color: var(--color-brand-deep);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
+  .archive__issue {
+    display: grid;
+    grid-template-columns: 80px 1fr 130px 60px;
+    gap: 20px;
+    align-items: center;
+    border-block: 1px solid var(--color-line);
+    padding: 22px 0;
+    text-decoration: none;
+    transition: color 140ms ease;
+  }
+
+  .archive__issue:hover {
+    color: var(--color-brand-deep);
+  }
+
+  .archive__number,
+  .archive__issue > span {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .archive__issue strong {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
+
+  .archive__open {
+    text-align: right;
+  }
+
+  .sponsor {
+    margin-bottom: clamp(84px, 11vw, 128px);
+    overflow: hidden;
+    border: 1px solid #efd8c8;
+    border-radius: 10px;
+    background: var(--color-brand-tint);
+  }
+
+  .sponsor__label {
+    padding: 9px 18px;
+    background: var(--color-brand-deep);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .sponsor__body {
+    display: grid;
+    grid-template-columns: 1fr 0.62fr auto;
+    gap: clamp(30px, 5vw, 60px);
+    align-items: end;
+    padding: clamp(28px, 5vw, 50px);
+  }
+
+  .sponsor h2 {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
+  }
+
+  .sponsor p {
+    max-width: 58ch;
+    margin: 15px 0 0;
+    color: #654d40;
+    font-family: var(--font-serif);
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  .sponsor dl {
+    margin: 0;
+    border-top: 1px solid #e8cbbb;
+  }
+
+  .sponsor dl div {
+    padding: 7px 0;
+    border-bottom: 1px solid #e8cbbb;
+  }
+
+  .sponsor dt {
+    color: var(--color-brand-deep);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .sponsor dd {
+    margin: 2px 0 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .closing {
+    padding-block: clamp(84px, 11vw, 124px);
+    border-top: 1px solid var(--color-line);
+    background: var(--color-surface);
+  }
+
+  .closing__inner {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    gap: clamp(48px, 9vw, 110px);
+    align-items: end;
+  }
+
+  .closing__meta {
+    margin: 0 0 18px;
+    color: var(--color-brand-deep);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 860px) {
+    .criteria__intro,
+    .latest__intro,
+    .submit__inner,
+    .closing__inner {
+      grid-template-columns: 1fr;
+    }
+
+    .sponsor__body {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .sponsor__body .button {
+      grid-column: 1 / -1;
+      justify-self: start;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .hero {
+      min-height: auto;
+      padding-block: 62px 50px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 15vw, 4.1rem);
+      line-height: 0.98;
+    }
+
+    .hero__lead {
+      margin-top: 24px;
+    }
+
+    .criteria__list {
+      grid-template-columns: 1fr;
+    }
+
+    .criteria__list li:nth-child(odd),
+    .criteria__list li:nth-child(even) {
+      border-right: 0;
+      padding-inline: 0;
+    }
+
+    .criteria__reject {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .archive__head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .archive__issue {
+      grid-template-columns: 54px 1fr;
+    }
+
+    .archive__issue > span:nth-of-type(2),
+    .archive__open {
+      display: none;
+    }
+
+    .sponsor__body {
+      grid-template-columns: 1fr;
+    }
+
+    .sponsor__body .button {
+      grid-column: auto;
+    }
+  }
+</style>

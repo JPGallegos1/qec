@@ -1,0 +1,211 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  issue: CollectionEntry<'issues'>;
+  compact?: boolean;
+}
+
+const { issue, compact = false } = Astro.props;
+const visibleStories = compact ? issue.data.stories.slice(0, 4) : issue.data.stories;
+const categoryNames: Record<string, string> = {
+  startup: 'Startup',
+  indie: 'Indie',
+  video: 'Ver / escuchar',
+  podcast: 'Ver / escuchar',
+  radar: 'Radar',
+};
+---
+
+<article class="issue-sheet">
+  <header class="issue-sheet__head">
+    <div>
+      <span class="data-tag data-tag--demo" hidden={!issue.data.demo}>Demostración</span>
+      <h3>{issue.data.title}</h3>
+      <p>{issue.data.description}</p>
+    </div>
+    <dl>
+      <div><dt>Lectura</dt><dd>{issue.data.readingMinutes} min</dd></div>
+      <div><dt>Señales</dt><dd>{issue.data.stories.length}</dd></div>
+      <div><dt>Fecha</dt><dd>{issue.data.dateLabel}</dd></div>
+    </dl>
+  </header>
+  <ol class="signal-list">
+    {visibleStories.map((story, index) => (
+      <li>
+        <span class="signal-list__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        <div>
+          <span class="data-tag">{categoryNames[story.category]}</span>
+          {story.sponsored && <span class="data-tag data-tag--sponsor signal-list__sponsor">Patrocinado</span>}
+          <h4>{story.title}</h4>
+          <p>{story.summary}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+  {compact && (
+    <footer class="issue-sheet__footer">
+      <p>Esta edición cero explica el formato. No presenta noticias como hechos reales.</p>
+      <a class="button" href={`/ediciones/${issue.id}/`}>Abrir edición cero</a>
+    </footer>
+  )}
+</article>
+
+<style>
+  .issue-sheet {
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-surface);
+  }
+
+  .issue-sheet__head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 34px;
+    padding: clamp(24px, 5vw, 44px);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  h3 {
+    max-width: 680px;
+    margin: 14px 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    font-variation-settings: "opsz" 80;
+    letter-spacing: -0.025em;
+    line-height: 1.04;
+  }
+
+  .issue-sheet__head p {
+    max-width: 62ch;
+    margin: 18px 0 0;
+    color: #625a52;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+
+  dl {
+    min-width: 152px;
+    margin: 0;
+    border-top: 1px solid var(--color-line);
+  }
+
+  dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  dt {
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+
+  .signal-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .signal-list li {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .signal-list__index {
+    display: grid;
+    place-items: start center;
+    border-right: 1px solid var(--color-line);
+    padding-top: 31px;
+    color: var(--color-brand);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+
+  .signal-list li > div {
+    padding: 28px clamp(22px, 4vw, 42px) 31px;
+  }
+
+  .signal-list__sponsor {
+    margin-left: 5px;
+  }
+
+  h4 {
+    margin: 12px 0 6px;
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.3vw, 1.75rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+  }
+
+  .signal-list p {
+    max-width: 70ch;
+    margin: 0;
+    color: #625a52;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .issue-sheet__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px clamp(22px, 4vw, 42px);
+    border-top: 1px solid #efd8c8;
+    background: var(--color-brand-tint);
+  }
+
+  .issue-sheet__footer p {
+    max-width: 58ch;
+    margin: 0;
+    color: #664c3e;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 680px) {
+    .issue-sheet__head {
+      grid-template-columns: 1fr;
+    }
+
+    dl {
+      min-width: 0;
+    }
+
+    .signal-list li {
+      grid-template-columns: 44px 1fr;
+    }
+
+    .signal-list__index {
+      padding-top: 29px;
+    }
+
+    .issue-sheet__footer {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+</style>
