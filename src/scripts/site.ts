@@ -3,15 +3,8 @@ import posthog from 'posthog-js';
 declare global {
   interface Window {
     turnstile?: {
-      render: (container: HTMLElement, options: {
-        sitekey: string;
-        action?: string;
-        theme: 'light' | 'dark';
-        size: 'flexible';
-      }) => string;
-      reset: (widgetId: string) => void;
+      reset: (widget: string | HTMLElement) => void;
     };
-    turnstileReady?: boolean;
   }
 }
 
@@ -32,63 +25,57 @@ const capture = (eventName?: string, properties?: Record<string, string>) => {
   if (posthogKey && eventName) posthog.capture(eventName, properties);
 };
 
-capture(document.body.dataset.pageEvent);
+capture('$pageview', {
+  path: window.location.pathname,
+  referrer: document.referrer,
+});
+capture(document.body.dataset.pageEvent, { path: window.location.pathname });
 
-const renderTurnstileWidgets = () => {
-  const turnstile = window.turnstile;
-  if (!turnstile) return;
+const waitForTurnstileToken = async (form: HTMLFormElement) => {
+  for (let attempt = 0; attempt < 3_000; attempt += 1) {
+    const token = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value;
+    if (token) return token;
+    await new Promise((resolve) => window.setTimeout(resolve, 100));
+  }
 
-  document.querySelectorAll<HTMLElement>('[data-turnstile]').forEach((container) => {
-    if (container.dataset.widgetId || !container.dataset.sitekey) return;
-
-    container.dataset.widgetId = turnstile.render(container, {
-      sitekey: container.dataset.sitekey,
-      action: container.dataset.action,
-      theme: container.dataset.theme === 'dark' ? 'dark' : 'light',
-      size: 'flexible',
-    });
-  });
+  throw new Error('La verificación anti-spam venció.');
 };
-
-if (window.turnstileReady) {
-  renderTurnstileWidgets();
-} else {
-  window.addEventListener('turnstile-ready', renderTurnstileWidgets, { once: true });
-}
 
 document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => {
   let started = false;
   const status = form.querySelector<HTMLElement>('[data-form-status]');
   const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
   const turnstileContainer = form.querySelector<HTMLElement>('[data-turnstile]');
+  const analyticsProperties = {
+    form: form.dataset.qecForm || 'unknown',
+    source: form.querySelector<HTMLInputElement>('[name="source"]')?.value || window.location.pathname,
+  };
 
   form.addEventListener('focusin', () => {
     if (started) return;
     started = true;
-    capture(form.dataset.startEvent);
+    capture(form.dataset.startEvent, analyticsProperties);
   });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!status || !button) return;
 
-    const turnstileToken = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value;
-    if (!turnstileToken) {
-      status.dataset.state = 'error';
-      status.textContent = 'Completá la verificación anti-spam antes de enviar.';
-      return;
-    }
-
     const idleLabel = button.textContent || 'Enviar';
     button.disabled = true;
-    button.textContent = button.dataset.loadingLabel || 'Enviando...';
     status.dataset.state = 'loading';
-    status.textContent = 'Estamos procesando tu envío.';
-
-    const values: Record<string, FormDataEntryValue | boolean> = Object.fromEntries(new FormData(form));
-    values.consent = form.querySelector<HTMLInputElement>('[name="consent"]')?.checked ?? false;
 
     try {
+      button.textContent = 'Verificando...';
+      status.textContent = 'Estamos validando la verificación anti-spam.';
+      const turnstileToken = await waitForTurnstileToken(form);
+
+      button.textContent = button.dataset.loadingLabel || 'Enviando...';
+      status.textContent = 'Estamos procesando tu envío.';
+      const values: Record<string, FormDataEntryValue | boolean> = Object.fromEntries(new FormData(form));
+      values.consent = form.querySelector<HTMLInputElement>('[name="consent"]')?.checked ?? false;
+      values['cf-turnstile-response'] = turnstileToken;
+
       const response = await fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,14 +85,14 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
       const result = isJson ? await response.json() as { message?: string } : {};
 
       if (response.status === 429) {
-        throw new Error('Recibimos demasiados envíos desde esta conexión. Esperá unos segundos.');
+        throw new Error('Recibimos demasiados envíos desde esta conexión. Esperá un minuto.');
       }
 
       if (!response.ok) throw new Error(result.message || 'No pudimos procesar el envío.');
 
       status.dataset.state = 'success';
       status.textContent = result.message || 'Listo. Gracias por participar.';
-      capture(form.dataset.completeEvent);
+      capture(form.dataset.completeEvent, analyticsProperties);
       form.reset();
       started = false;
     } catch (error) {
@@ -114,8 +101,7 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
         ? `${error.message} Probá nuevamente.`
         : 'No pudimos procesar el envío. Probá nuevamente.';
     } finally {
-      const widgetId = turnstileContainer?.dataset.widgetId;
-      if (widgetId) window.turnstile?.reset(widgetId);
+      if (turnstileContainer) window.turnstile?.reset(turnstileContainer);
       button.disabled = false;
       button.textContent = idleLabel;
     }

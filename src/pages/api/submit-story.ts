@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 import { createHash } from 'node:crypto';
 import { Resend } from 'resend';
-import { cleanText, isEmail, isSameOrigin, isWebUrl, jsonResponse, readJsonBody, safeText, verifyTurnstile } from '../../lib/forms';
+import { cleanText, enforceFormRateLimit, hasConsent, isEmail, isSameOrigin, isWebUrl, jsonResponse, readFormBody, safeText, verifyTurnstile } from '../../lib/forms';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   if (!isSameOrigin(request)) return jsonResponse({ message: 'No pudimos validar el origen del formulario.' }, 403);
-  const parsed = await readJsonBody(request);
+  const parsed = await readFormBody(request);
   if ('response' in parsed) return parsed.response;
   const { body } = parsed;
   if (cleanText(body.role, 100)) return jsonResponse({ message: 'Recibimos tu novedad. Gracias.' });
@@ -23,7 +23,10 @@ export const POST: APIRoute = async ({ request }) => {
   if (!name || !project || !summary || !isEmail(email) || !isWebUrl(url) || !validCategories.includes(category)) {
     return jsonResponse({ message: 'Revisá los campos y la URL de la fuente original.' }, 400);
   }
-  if (body.consent !== true) return jsonResponse({ message: 'Necesitamos tu consentimiento para evaluar el envío.' }, 400);
+  if (!hasConsent(body.consent)) return jsonResponse({ message: 'Necesitamos tu consentimiento para evaluar el envío.' }, 400);
+
+  const rateLimitError = await enforceFormRateLimit(request, 'submit-story', email);
+  if (rateLimitError) return rateLimitError;
 
   const turnstileError = await verifyTurnstile(request, body['cf-turnstile-response'], 'submit-story');
   if (turnstileError) return turnstileError;
@@ -60,6 +63,6 @@ export const POST: APIRoute = async ({ request }) => {
 
   return jsonResponse({
     id: data?.id,
-    message: 'Recibimos tu novedad. La vamos a revisar a mano.',
+    message: 'Recibimos tu novedad. La revisaremos a la brevedad.',
   }, 201);
 };

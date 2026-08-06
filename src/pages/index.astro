@@ -10,7 +10,7 @@ const issues = (await getCollection('issues', ({ data }) => !data.draft))
 const latestIssue = issues[0];
 ---
 
-<BaseLayout pageEvent="landing_viewed">
+<BaseLayout pageEvent="landing_viewed" turnstile>
   <section class="hero shell" id="suscribirme" aria-labelledby="hero-title">
     <h1 id="hero-title">Lo que construye el ecosistema emprendedor de <span class="hero__country">Argentina</span></h1>
     <p class="hero__lead">Cada dos viernes, una edición curada a mano: lanzamientos, startups, proyectos indie, comunidad y radar. Sin relleno, sin hype. Las fuentes, siempre a la vista.</p>
@@ -20,7 +20,6 @@ const latestIssue = issues[0];
   <section class="audience shell" id="para-quien" aria-labelledby="audience-title">
     <div class="audience__intro">
       <div>
-        <p class="audience__label">Para quién es</p>
         <h2 class="section-heading" id="audience-title">Para quienes construyen y necesitan mirar alrededor.</h2>
       </div>
       <p class="section-copy">QEC está pensada primero para founders y operadores que necesitan una vista rápida y confiable de lo que se mueve en la tecnología argentina.</p>
@@ -67,7 +66,7 @@ const latestIssue = issues[0];
         <dl>
           <div><dt>Buscamos</dt><dd>Algo que cambió</dd></div>
           <div><dt>Necesitamos</dt><dd>Una fuente original</dd></div>
-          <div><dt>Revisamos</dt><dd>Cada envío a mano</dd></div>
+          <div><dt>Revisamos</dt><dd>A la brevedad</dd></div>
         </dl>
       </div>
       <StoryForm />
@@ -107,7 +106,7 @@ const latestIssue = issues[0];
   }
 
   .hero h1 {
-    max-width: 790px;
+    max-width: 1060px;
     margin: 0;
     animation: hero-headline-set 680ms var(--ease-out) both;
     font-family: var(--font-serif);
@@ -119,11 +118,7 @@ const latestIssue = issues[0];
   }
 
   .hero__country {
-    background: linear-gradient(105deg, var(--color-argentina-blue-deep) 0%, var(--color-argentina-blue) 38%, var(--color-argentina-gold) 50%, var(--color-argentina-blue) 62%, var(--color-argentina-blue-deep) 100%);
-    background-clip: text;
     color: var(--color-argentina-blue-deep);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 
   .hero__lead {
@@ -169,19 +164,14 @@ const latestIssue = issues[0];
     margin-bottom: 52px;
   }
 
-  .audience__label,
   .audience__role {
     margin: 0;
     color: var(--color-brand-deep);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-  }
-
-  .audience__label {
-    margin-bottom: 14px;
   }
 
   .audience__intro .section-copy {
@@ -249,13 +239,14 @@ const latestIssue = issues[0];
   .audience__secondary strong {
     color: var(--color-brand-deep);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .audience__secondary p {
+    max-width: 62ch;
     margin: 0;
     color: #5f584f;
     font-family: var(--font-serif);
@@ -318,7 +309,7 @@ const latestIssue = issues[0];
   .submit__copy dt {
     color: var(--color-night-muted);
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -368,7 +359,7 @@ const latestIssue = issues[0];
   .archive__issue > span {
     color: var(--color-muted);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }

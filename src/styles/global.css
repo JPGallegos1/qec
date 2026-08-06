@@ -124,17 +124,16 @@ select {
 
 .brand-logo {
   display: block;
-  width: 38px;
+  width: 76px;
   height: 38px;
-  overflow: hidden;
 }
 
 .brand-logo img {
   display: block;
-  width: 114px;
+  width: 76px;
   max-width: none;
-  height: 76px;
-  transform: translate(-38px, -16px);
+  height: auto;
+  transform: translateY(-26px);
 }
 
 .site-nav {
@@ -291,7 +290,7 @@ select {
   padding: 3px 7px;
   background: var(--color-surface-2);
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.2;

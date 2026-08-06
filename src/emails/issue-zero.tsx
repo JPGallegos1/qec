@@ -21,16 +21,19 @@ type Story = {
   sponsored?: boolean;
 };
 
-type IssueEmailProps = {
+type IssueEmailBaseProps = {
   issueNumber?: string;
   dateLabel?: string;
   intro?: string;
   stories?: Story[];
   siteUrl?: string;
   replyTo?: string;
-  unsubscribeUrl?: string;
-  demo?: boolean;
 };
+
+type IssueEmailProps = IssueEmailBaseProps & (
+  | { demo?: true; unsubscribeUrl?: string }
+  | { demo: false; unsubscribeUrl: string }
+);
 
 const sampleStories: Story[] = [
   {
@@ -74,9 +77,13 @@ export function IssueEmail({
   stories = sampleStories,
   siteUrl = 'https://qec.example',
   replyTo = 'hola@qec.example',
-  unsubscribeUrl = 'https://qec.example/unsubscribe',
+  unsubscribeUrl,
   demo = true,
 }: IssueEmailProps) {
+  if (!demo && !unsubscribeUrl) {
+    throw new Error('Las ediciones reales requieren una URL de baja.');
+  }
+
   return (
     <Html lang="es">
       <Head>
@@ -118,7 +125,7 @@ export function IssueEmail({
 
           <Section className="qec-pad" style={styles.participation}>
             <Heading as="h2" style={styles.participationTitle}>¿Qué estás construyendo?</Heading>
-            <Text style={styles.participationText}>Mandanos un lanzamiento, avance o aprendizaje con su fuente original. Revisamos cada envío a mano.</Text>
+            <Text style={styles.participationText}>Mandanos un lanzamiento, avance o aprendizaje con su fuente original. Revisaremos tu envío a la brevedad.</Text>
             <Button href={`${siteUrl}/#enviar`} style={styles.button}>ENVIAR NOVEDAD</Button>
           </Section>
 
@@ -126,7 +133,7 @@ export function IssueEmail({
             <Text style={styles.footerText}>Respondé directamente a este email. Tu respuesta llega a <Link href={`mailto:${replyTo}`} style={styles.footerLink}>{replyTo}</Link>.</Text>
             <Hr style={styles.hr} />
             <Text style={styles.footerText}>Recibís QEC porque te suscribiste a la curaduría quincenal.</Text>
-            <Link href={unsubscribeUrl} style={styles.footerLink}>Darme de baja</Link>
+            {unsubscribeUrl && <Link href={unsubscribeUrl} style={styles.footerLink}>Darme de baja</Link>}
             <Text style={styles.footerSmall}>Las aperturas son orientativas. QEC prioriza clics recurrentes, respuestas y contribuciones.</Text>
           </Section>
         </Container>

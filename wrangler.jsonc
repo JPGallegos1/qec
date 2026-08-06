@@ -2,7 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "qec",
   "main": "@astrojs/cloudflare/entrypoints/server",
-  "compatibility_date": "2026-08-05",
+  "compatibility_date": "2026-08-06",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "workers_dev": false,
   "preview_urls": false,
@@ -18,9 +18,27 @@
   ],
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist",
+    "run_worker_first": true
   },
+  "ratelimits": [
+    {
+      "name": "FORM_RATE_LIMITER",
+      "namespace_id": "918271",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
   "observability": {
-    "enabled": true
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.01
+    }
   }
 }

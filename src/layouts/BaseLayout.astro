@@ -10,15 +10,18 @@ interface Props {
   title?: string;
   description?: string;
   pageEvent?: string;
+  turnstile?: boolean;
 }
 
 const {
   title = 'Qué Están Construyendo',
   description = 'Una curaduría quincenal sobre lo que construyen startups, founders e indie hackers vinculados con Argentina.',
   pageEvent,
+  turnstile = false,
 } = Astro.props;
 const pageTitle = title === 'Qué Están Construyendo' ? title : `${title} | Qué Están Construyendo`;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
+const socialImage = new URL(logo.src, Astro.site || Astro.url);
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL || 'hola@qec.example';
 const structuredData = {
   '@context': 'https://schema.org',
@@ -45,18 +48,17 @@ const structuredData = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Logotipo de Qué Están Construyendo" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="Logotipo de Qué Están Construyendo" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script is:inline>
-      window.onTurnstileLoad = () => {
-        window.turnstileReady = true;
-        window.dispatchEvent(new Event('turnstile-ready'));
-      };
-    </script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" defer is:inline></script>
+    {turnstile && <link rel="preconnect" href="https://challenges.cloudflare.com" />}
+    {turnstile && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>}
     <title>{pageTitle}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
   </head>
@@ -73,7 +75,7 @@ const structuredData = {
       <div class="site-header__inner shell">
         <a class="wordmark" href="/" aria-label="Qué Están Construyendo, inicio">
           <span class="brand-logo" aria-hidden="true">
-            <Image src={logo} alt="" width={114} height={76} format="webp" />
+            <Image src={logo} alt="" width={76} format="webp" />
           </span>
         </a>
         <nav class="site-nav" aria-label="Navegación principal">
@@ -89,7 +91,7 @@ const structuredData = {
       <div class="site-footer__inner shell">
         <a class="footer-brand" href="/" aria-label="Qué Están Construyendo, inicio">
           <span class="brand-logo" aria-hidden="true">
-            <Image src={logo} alt="" width={114} height={76} format="webp" />
+            <Image src={logo} alt="" width={76} format="webp" />
           </span>
         </a>
         <nav aria-label="Enlaces legales">

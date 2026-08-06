@@ -17,7 +17,7 @@ const { issue } = Astro.props;
 const { Content } = await render(issue);
 ---
 
-<BaseLayout title={issue.data.title} description={issue.data.description}>
+<BaseLayout title={issue.data.title} description={issue.data.description} turnstile>
   <article class="issue-page shell">
     <a class="issue-page__back" href="/ediciones/">Volver al archivo</a>
     <div class="issue-page__intro prose">
@@ -40,10 +40,9 @@ const { Content } = await render(issue);
           <textarea id="feedback-message" name="message" maxlength="800" required></textarea>
         </div>
         <div class="sr-only" aria-hidden="true">
-          <label for="feedback-company">Empresa</label>
           <input id="feedback-company" name="company" type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <Turnstile action="feedback" />
+        <Turnstile action="feedback" id="turnstile-feedback" />
         <button class="button" type="submit" data-loading-label="Enviando...">Enviar feedback</button>
         <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>
@@ -61,7 +60,7 @@ const { Content } = await render(issue);
     margin-bottom: 42px;
     color: var(--color-brand-deep);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     font-weight: 500;
     letter-spacing: 0.07em;
     text-transform: uppercase;

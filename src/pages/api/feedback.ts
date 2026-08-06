@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 import { createHash } from 'node:crypto';
 import { Resend } from 'resend';
-import { cleanText, isEmail, isSameOrigin, jsonResponse, readJsonBody, safeText, verifyTurnstile } from '../../lib/forms';
+import { cleanText, enforceFormRateLimit, isEmail, isSameOrigin, jsonResponse, readFormBody, safeText, verifyTurnstile } from '../../lib/forms';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   if (!isSameOrigin(request)) return jsonResponse({ message: 'No pudimos validar el origen del formulario.' }, 403);
-  const parsed = await readJsonBody(request);
+  const parsed = await readFormBody(request);
   if ('response' in parsed) return parsed.response;
   const { body } = parsed;
   if (cleanText(body.company, 100)) return jsonResponse({ message: 'Gracias por responder.' });
@@ -18,6 +18,9 @@ export const POST: APIRoute = async ({ request }) => {
   if (!issue || !message || (email && !isEmail(email))) {
     return jsonResponse({ message: 'Revisá el mensaje y el email.' }, 400);
   }
+
+  const rateLimitError = await enforceFormRateLimit(request, 'feedback', email || undefined);
+  if (rateLimitError) return rateLimitError;
 
   const turnstileError = await verifyTurnstile(request, body['cf-turnstile-response'], 'feedback');
   if (turnstileError) return turnstileError;
