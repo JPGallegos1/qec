@@ -49,6 +49,8 @@ Si el despliegue se configura con Git mediante **Workers Builds**, cargar en **W
 
 Estas últimas son variables de build: `SITE_URL` genera canonicales y sitemap; los valores `PUBLIC_*` se compilan en el frontend y no pueden contener secretos.
 
+`pnpm build` regenera `public/_headers` con el origen HTTPS de `PUBLIC_POSTHOG_HOST`, de modo que la CSP de Static Assets coincida con la aplicada por el middleware. No edites ese archivo manualmente.
+
 ## Contenido
 
 Las ediciones viven en `src/content/issues/` y se validan con `src/content.config.ts`. La edición cero es una demostración explícita y no contiene noticias reales.
