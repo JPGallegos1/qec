@@ -50,7 +50,13 @@ const structuredData = {
     <meta name="twitter:description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
+    <script is:inline>
+      window.onTurnstileLoad = () => {
+        window.turnstileReady = true;
+        window.dispatchEvent(new Event('turnstile-ready'));
+      };
+    </script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" defer is:inline></script>
     <title>{pageTitle}</title>
     <script type="application/ld+json" is:inline set:html={JSON.stringify(structuredData)} />
   </head>

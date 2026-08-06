@@ -3,8 +3,15 @@ import posthog from 'posthog-js';
 declare global {
   interface Window {
     turnstile?: {
-      reset: () => void;
+      render: (container: HTMLElement, options: {
+        sitekey: string;
+        action?: string;
+        theme: 'light' | 'dark';
+        size: 'flexible';
+      }) => string;
+      reset: (widgetId: string) => void;
     };
+    turnstileReady?: boolean;
   }
 }
 
@@ -27,10 +34,33 @@ const capture = (eventName?: string, properties?: Record<string, string>) => {
 
 capture(document.body.dataset.pageEvent);
 
+const renderTurnstileWidgets = () => {
+  const turnstile = window.turnstile;
+  if (!turnstile) return;
+
+  document.querySelectorAll<HTMLElement>('[data-turnstile]').forEach((container) => {
+    if (container.dataset.widgetId || !container.dataset.sitekey) return;
+
+    container.dataset.widgetId = turnstile.render(container, {
+      sitekey: container.dataset.sitekey,
+      action: container.dataset.action,
+      theme: container.dataset.theme === 'dark' ? 'dark' : 'light',
+      size: 'flexible',
+    });
+  });
+};
+
+if (window.turnstileReady) {
+  renderTurnstileWidgets();
+} else {
+  window.addEventListener('turnstile-ready', renderTurnstileWidgets, { once: true });
+}
+
 document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => {
   let started = false;
   const status = form.querySelector<HTMLElement>('[data-form-status]');
   const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const turnstileContainer = form.querySelector<HTMLElement>('[data-turnstile]');
 
   form.addEventListener('focusin', () => {
     if (started) return;
@@ -84,7 +114,8 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
         ? `${error.message} Probá nuevamente.`
         : 'No pudimos procesar el envío. Probá nuevamente.';
     } finally {
-      window.turnstile?.reset();
+      const widgetId = turnstileContainer?.dataset.widgetId;
+      if (widgetId) window.turnstile?.reset(widgetId);
       button.disabled = false;
       button.textContent = idleLabel;
     }
