@@ -1,3 +1,7 @@
+---
+import Turnstile from './Turnstile.astro';
+---
+
 <form
   class="story-form"
   action="/api/submit-story"
@@ -44,6 +48,7 @@
     <label for="story-role">Cargo</label>
     <input id="story-role" name="role" type="text" tabindex="-1" autocomplete="off" />
   </div>
+  <Turnstile action="submit-story" theme="dark" />
   <label class="consent">
     <input name="consent" type="checkbox" required />
     <span>Acepto que QEC use estos datos para evaluar y contactar sobre esta novedad. Enviar no garantiza publicación.</span>

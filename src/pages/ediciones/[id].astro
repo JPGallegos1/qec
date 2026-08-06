@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IssuePreview from '../../components/IssuePreview.astro';
+import Turnstile from '../../components/Turnstile.astro';
 
 export async function getStaticPaths() {
   const issues = await getCollection('issues', ({ data }) => !data.draft);
@@ -42,6 +43,7 @@ const { Content } = await render(issue);
           <label for="feedback-company">Empresa</label>
           <input id="feedback-company" name="company" type="text" tabindex="-1" autocomplete="off" />
         </div>
+        <Turnstile action="feedback" />
         <button class="button" type="submit" data-loading-label="Enviando...">Enviar feedback</button>
         <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>

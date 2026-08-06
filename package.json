@@ -2,14 +2,16 @@
   "name": "qec",
   "type": "module",
   "version": "0.0.1",
+  "packageManager": "pnpm@11.18.0",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node --env-file-if-exists=.env --env-file-if-exists=.env.local --env-file-if-exists=.env.production --env-file-if-exists=.env.production.local scripts/generate-headers.mjs",
     "build": "astro build",
     "check": "astro check",
-    "deploy": "astro build && wrangler deploy",
+    "deploy": "pnpm run build && wrangler deploy",
     "email:dev": "email dev --dir src/emails",
     "preview": "astro preview",
     "types": "wrangler types --include-runtime false",

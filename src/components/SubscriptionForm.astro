@@ -1,4 +1,6 @@
 ---
+import Turnstile from './Turnstile.astro';
+
 interface Props {
   source?: string;
 }
@@ -30,6 +32,7 @@ const { source = 'landing' } = Astro.props;
     </div>
     <button class="button" type="submit" data-loading-label="Suscribiendo...">Suscribirme</button>
   </div>
+  <Turnstile action="subscribe" />
   <div class="sr-only" aria-hidden="true">
     <label for={`subscription-company-${source}`}>Empresa</label>
     <input id={`subscription-company-${source}`} name="company" type="text" tabindex="-1" autocomplete="off" />
@@ -57,7 +60,7 @@ const { source = 'landing' } = Astro.props;
   }
 
   .subscription-form :global(.consent) {
-    margin-top: 10px;
+    margin-top: 8px;
     font-family: var(--font-mono);
     font-size: 0.62rem;
     letter-spacing: 0.03em;

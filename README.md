@@ -23,10 +23,10 @@ Landing, archivo editorial y newsletter quincenal para QEC. El MVP usa archivos 
 ## Despliegue
 
 - `pnpm deploy` publica el sitio y sus endpoints en Cloudflare Workers.
-- El despliegue temporal está disponible en `https://qec.jpgallegos20.workers.dev`.
+- Producción usa `https://queestanconstruyendo.com`; `workers.dev` y las preview URLs permanecen desactivadas.
 - `SITE_URL` debe coincidir con el hostname publicado antes de construir para generar canonicales y sitemap correctos.
 - Las variables privadas de Resend deben cargarse como Worker Secrets; nunca se incluyen en `wrangler.jsonc`.
-- Al incorporar el dominio definitivo, hay que actualizar `SITE_URL`, los hostnames de Turnstile y volver a desplegar.
+- La site key pública de Turnstile vive en `src/components/Turnstile.astro`; su secreto nunca se incluye en el repositorio.
 
 ### Variables en Cloudflare
 
@@ -36,6 +36,7 @@ En **Workers & Pages > qec > Settings > Variables and Secrets**, cargar como **S
 - `RESEND_FROM`
 - `RESEND_REPLY_TO`
 - `QEC_EDITOR_EMAIL`
+- `TURNSTILE_SECRET_KEY`
 
 Sin esos secretos los formularios quedan intencionalmente deshabilitados y responden `503`. No usar variables públicas ni `wrangler.jsonc` para valores de Resend.
 
@@ -47,6 +48,8 @@ Si el despliegue se configura con Git mediante **Workers Builds**, cargar en **W
 - `PUBLIC_POSTHOG_HOST`
 
 Estas últimas son variables de build: `SITE_URL` genera canonicales y sitemap; los valores `PUBLIC_*` se compilan en el frontend y no pueden contener secretos.
+
+`pnpm build` regenera `public/_headers` con el origen HTTPS de `PUBLIC_POSTHOG_HOST`, de modo que la CSP de Static Assets coincida con la aplicada por el middleware. No edites ese archivo manualmente.
 
 ## Contenido
 

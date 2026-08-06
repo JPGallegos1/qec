@@ -1,0 +1,30 @@
+---
+interface Props {
+  action: 'subscribe' | 'submit-story' | 'feedback';
+  theme?: 'light' | 'dark';
+}
+
+const { action, theme = 'light' } = Astro.props;
+const siteKey = '0x4AAAAAAEHhbScpm_ANo5Vj';
+---
+
+<div class="turnstile-field">
+  <div
+    data-turnstile
+    data-sitekey={siteKey}
+    data-action={action}
+    data-theme={theme}
+    data-size="flexible"
+  ></div>
+</div>
+
+<style>
+  .turnstile-field {
+    min-height: 65px;
+    overflow: hidden;
+  }
+
+  .turnstile-field :global([data-turnstile]) {
+    width: min(300px, 100%);
+  }
+</style>
