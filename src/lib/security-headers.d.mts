@@ -1,4 +1,5 @@
 export function resolvePosthogOrigin(host?: string): string;
+export function resolvePosthogAssetsOrigin(posthogOrigin: string): string;
 export function createSecurityHeaders(
   posthogHost?: string,
   options?: { upgradeInsecureRequests?: boolean },

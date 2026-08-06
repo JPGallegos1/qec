@@ -9,20 +9,47 @@ export const resolvePosthogOrigin = (host) => {
   }
 };
 
+export const resolvePosthogAssetsOrigin = (posthogOrigin) => {
+  try {
+    const url = new URL(posthogOrigin);
+    // us.i.posthog.com → us-assets.i.posthog.com
+    url.hostname = url.hostname.replace(/^([^.]+)\.i\.posthog\.com$/, '$1-assets.i.posthog.com');
+    return url.origin;
+  } catch {
+    return 'https://us-assets.i.posthog.com';
+  }
+};
+
 export const createSecurityHeaders = (posthogHost, { upgradeInsecureRequests = true } = {}) => {
   const posthogOrigin = resolvePosthogOrigin(posthogHost);
+  const posthogAssetsOrigin = resolvePosthogAssetsOrigin(posthogOrigin);
   const contentSecurityPolicy = [
     "default-src 'self'",
     "base-uri 'self'",
-    `connect-src 'self' https://queestanconstruyendo.com https://www.queestanconstruyendo.com ${posthogOrigin} https://challenges.cloudflare.com`,
-    "font-src 'self'",
+    [
+      "connect-src 'self'",
+      'https://queestanconstruyendo.com',
+      'https://www.queestanconstruyendo.com',
+      posthogOrigin,
+      posthogAssetsOrigin,
+      'https://challenges.cloudflare.com',
+      'https://*.challenges.cloudflare.com',
+      'https://static.cloudflareinsights.com',
+    ].join(' '),
+    "font-src 'self' data:",
     "form-action 'self'",
     "frame-ancestors 'none'",
-    'frame-src https://challenges.cloudflare.com',
+    'frame-src https://challenges.cloudflare.com https://*.challenges.cloudflare.com',
     "img-src 'self' data:",
     "object-src 'none'",
-    "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
-    "style-src 'self' 'unsafe-inline'",
+    [
+      "script-src 'self' 'unsafe-inline'",
+      'https://challenges.cloudflare.com',
+      posthogAssetsOrigin,
+      'https://static.cloudflareinsights.com',
+    ].join(' '),
+    "style-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
+    "worker-src 'self' blob:",
   ];
 
   if (upgradeInsecureRequests) {

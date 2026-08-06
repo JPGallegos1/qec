@@ -10,7 +10,16 @@ declare global {
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
 let capture = (_eventName?: string, _properties?: Record<string, string>) => {};
 
-const sharedTurnstile = document.querySelector<HTMLElement>('[data-turnstile]');
+// Static Assets don't hit middleware when run_worker_first is only `/api/*`.
+// Bounce www → apex in the client so forms and Turnstile always run on the canonical host.
+const onWww = window.location.hostname === 'www.queestanconstruyendo.com';
+if (onWww) {
+  const apex = new URL(window.location.href);
+  apex.hostname = 'queestanconstruyendo.com';
+  window.location.replace(apex.href);
+}
+
+const sharedTurnstile = onWww ? null : document.querySelector<HTMLElement>('[data-turnstile]');
 
 const readTurnstileToken = () =>
   document.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value || '';
@@ -117,33 +126,36 @@ const bindForms = () => {
   });
 };
 
-bindForms();
+if (!onWww) {
+  bindForms();
 
-void import('posthog-js').then(({ default: posthog }) => {
-  if (!posthogKey) return;
+  void import('posthog-js').then(({ default: posthog }) => {
+    if (!posthogKey) return;
 
-  try {
-    posthog.init(posthogKey, {
-      api_host: import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-      capture_pageview: false,
-      capture_pageleave: false,
-      disable_session_recording: true,
-      person_profiles: 'never',
-      persistence: 'memory',
-    });
+    try {
+      posthog.init(posthogKey, {
+        api_host: import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+        ui_host: 'https://us.posthog.com',
+        capture_pageview: false,
+        capture_pageleave: false,
+        disable_session_recording: true,
+        person_profiles: 'never',
+        persistence: 'memory',
+      });
 
-    capture = (eventName?: string, properties?: Record<string, string>) => {
-      if (eventName) posthog.capture(eventName, properties);
-    };
+      capture = (eventName?: string, properties?: Record<string, string>) => {
+        if (eventName) posthog.capture(eventName, properties);
+      };
 
-    capture('$pageview', {
-      path: window.location.pathname,
-      referrer: document.referrer,
-    });
-    capture(document.body.dataset.pageEvent, { path: window.location.pathname });
-  } catch (error) {
-    console.warn('PostHog no pudo inicializarse', error);
-  }
-}).catch((error) => {
-  console.warn('PostHog no pudo cargarse', error);
-});
+      capture('$pageview', {
+        path: window.location.pathname,
+        referrer: document.referrer,
+      });
+      capture(document.body.dataset.pageEvent, { path: window.location.pathname });
+    } catch (error) {
+      console.warn('PostHog no pudo inicializarse', error);
+    }
+  }).catch((error) => {
+    console.warn('PostHog no pudo cargarse', error);
+  });
+}
