@@ -26,7 +26,7 @@ Durante el desarrollo local, Turnstile usa las credenciales de prueba oficiales 
 
 - `pnpm deploy` publica el sitio y sus endpoints en Cloudflare Workers.
 - Producción usa `https://queestanconstruyendo.com`; `workers.dev` y las preview URLs permanecen desactivadas.
-- El Worker procesa primero las rutas y redirige permanentemente `www` al dominio raíz conservando ruta y query string.
+- El Worker corre primero solo en `/api/*` (`assets.run_worker_first`); el resto lo sirven Static Assets. El middleware redirige permanentemente `www` al dominio raíz cuando la petición llega al Worker.
 - `SITE_URL` debe coincidir con el hostname publicado antes de construir para generar canonicales y sitemap correctos.
 - Las variables privadas de Resend deben cargarse como Worker Secrets; nunca se incluyen en `wrangler.jsonc`.
 - La site key pública de Turnstile vive en `src/components/Turnstile.astro`; su secreto nunca se incluye en el repositorio.

@@ -2,7 +2,6 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IssuePreview from '../../components/IssuePreview.astro';
-import Turnstile from '../../components/Turnstile.astro';
 
 export async function getStaticPaths() {
   const issues = await getCollection('issues', ({ data }) => !data.draft);
@@ -29,7 +28,7 @@ const { Content } = await render(issue);
         <h2 id="feedback-title">¿Esta edición te ahorró tiempo?</h2>
         <p>Una línea alcanza. Leemos cada respuesta para ajustar la próxima selección.</p>
       </div>
-      <form action="/api/feedback" method="post" data-qec-form="feedback" data-complete-event="feedback_submitted">
+      <form action="/api/feedback" method="post" data-qec-form="feedback" data-complete-event="feedback_submitted" onsubmit="return false">
         <input type="hidden" name="issue" value={issue.id} />
         <div class="field">
           <label for="feedback-email">Tu email (opcional)</label>
@@ -42,7 +41,6 @@ const { Content } = await render(issue);
         <div class="sr-only" aria-hidden="true">
           <input id="feedback-company" name="company" type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <Turnstile action="feedback" id="turnstile-feedback" />
         <button class="button" type="submit" data-loading-label="Enviando...">Enviar feedback</button>
         <p class="form-status" data-form-status role="status" aria-live="polite"></p>
       </form>

@@ -9,12 +9,12 @@ export const resolvePosthogOrigin = (host) => {
   }
 };
 
-export const createSecurityHeaders = (posthogHost) => {
+export const createSecurityHeaders = (posthogHost, { upgradeInsecureRequests = true } = {}) => {
   const posthogOrigin = resolvePosthogOrigin(posthogHost);
   const contentSecurityPolicy = [
     "default-src 'self'",
     "base-uri 'self'",
-    `connect-src 'self' ${posthogOrigin} https://challenges.cloudflare.com`,
+    `connect-src 'self' https://queestanconstruyendo.com https://www.queestanconstruyendo.com ${posthogOrigin} https://challenges.cloudflare.com`,
     "font-src 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
@@ -23,11 +23,14 @@ export const createSecurityHeaders = (posthogHost) => {
     "object-src 'none'",
     "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
     "style-src 'self' 'unsafe-inline'",
-    'upgrade-insecure-requests',
-  ].join('; ');
+  ];
+
+  if (upgradeInsecureRequests) {
+    contentSecurityPolicy.push('upgrade-insecure-requests');
+  }
 
   return {
-    'Content-Security-Policy': contentSecurityPolicy,
+    'Content-Security-Policy': contentSecurityPolicy.join('; '),
     'Permissions-Policy': 'camera=(), geolocation=(), microphone=(), payment=(), usb=()',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'X-Content-Type-Options': 'nosniff',

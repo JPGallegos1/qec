@@ -28,7 +28,7 @@ export const POST: APIRoute = async ({ request }) => {
   const rateLimitError = await enforceFormRateLimit(request, 'submit-story', email);
   if (rateLimitError) return rateLimitError;
 
-  const turnstileError = await verifyTurnstile(request, body['cf-turnstile-response'], 'submit-story');
+  const turnstileError = await verifyTurnstile(request, body['cf-turnstile-response'], 'qec-form');
   if (turnstileError) return turnstileError;
 
   const apiKey = process.env.RESEND_API_KEY;
