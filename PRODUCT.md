@@ -44,6 +44,8 @@ The public name is "Que Estan Construyendo"; QEC is its operational abbreviation
 
 The visual identity is pinned to a warm independent-publication system: paper `#FAF6EF`, ink `#1C1815`, orange `#E5571F`, Newsreader for editorial text, Hanken Grotesk for interface text, and JetBrains Mono for dates and sources. The public wordmark combines the full name with an orange QEC sigla.
 
+The landing statement is "Lo que construye el ecosistema emprendedor de Argentina". Its final word uses a restrained, accessible gradient derived from Argentine sky blue and sun gold.
+
 Sponsorship is deferred while QEC builds its initial community. The public site and edition-zero email do not include sponsor offers or commercial calls to action.
 
 ## Evidence on Hand

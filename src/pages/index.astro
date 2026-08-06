@@ -12,7 +12,7 @@ const latestIssue = issues[0];
 
 <BaseLayout pageEvent="landing_viewed">
   <section class="hero shell" id="suscribirme" aria-labelledby="hero-title">
-    <h1 id="hero-title">Lo que se está construyendo en la tecnología argentina.</h1>
+    <h1 id="hero-title">Lo que construye el ecosistema emprendedor de <span class="hero__country">Argentina</span></h1>
     <p class="hero__lead">Cada dos viernes, una edición curada a mano: lanzamientos, startups, proyectos indie, comunidad y radar. Sin relleno, sin hype. Las fuentes, siempre a la vista.</p>
     <SubscriptionForm source="hero" />
   </section>
@@ -109,6 +109,7 @@ const latestIssue = issues[0];
   .hero h1 {
     max-width: 790px;
     margin: 0;
+    animation: hero-headline-set 680ms var(--ease-out) both;
     font-family: var(--font-serif);
     font-size: clamp(3.4rem, 7.8vw, 5rem);
     font-weight: 500;
@@ -117,14 +118,42 @@ const latestIssue = issues[0];
     line-height: 0.98;
   }
 
+  .hero__country {
+    background: linear-gradient(105deg, var(--color-argentina-blue-deep) 0%, var(--color-argentina-blue) 38%, var(--color-argentina-gold) 50%, var(--color-argentina-blue) 62%, var(--color-argentina-blue-deep) 100%);
+    background-clip: text;
+    color: var(--color-argentina-blue-deep);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .hero__lead {
     max-width: 62ch;
     margin: 30px 0 32px;
+    animation: hero-detail-set 520ms var(--ease-out) 70ms both;
     color: #514a43;
     font-family: var(--font-serif);
     font-size: clamp(1.1rem, 1.8vw, 1.3rem);
     line-height: 1.55;
     overflow-wrap: anywhere;
+  }
+
+  .hero :global(.subscription-form) {
+    animation: hero-detail-set 520ms var(--ease-out) 140ms both;
+  }
+
+  @keyframes hero-headline-set {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 22% 0);
+      transform: translateY(12px);
+    }
+  }
+
+  @keyframes hero-detail-set {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
   }
 
   .audience {
@@ -424,5 +453,19 @@ const latestIssue = issues[0];
       display: none;
     }
 
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1,
+    .hero__lead,
+    .hero :global(.subscription-form) {
+      animation: hero-fade 200ms ease both;
+    }
+
+    @keyframes hero-fade {
+      from {
+        opacity: 0;
+      }
+    }
   }
 </style>
