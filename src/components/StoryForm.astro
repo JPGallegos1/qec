@@ -45,17 +45,16 @@ import Turnstile from './Turnstile.astro';
     <textarea id="story-summary" name="summary" maxlength="1200" placeholder="Contanos qué lanzaron, avanzaron o aprendieron. Incluí fecha y contexto argentino." required></textarea>
   </div>
   <div class="sr-only" aria-hidden="true">
-    <label for="story-role">Cargo</label>
     <input id="story-role" name="role" type="text" tabindex="-1" autocomplete="off" />
   </div>
-  <Turnstile action="submit-story" theme="dark" />
+  <Turnstile action="submit-story" id="turnstile-submit-story" theme="dark" />
   <label class="consent">
     <input name="consent" type="checkbox" required />
     <span>Acepto que QEC use estos datos para evaluar y contactar sobre esta novedad. Enviar no garantiza publicación.</span>
   </label>
   <div class="story-form__submit">
     <button class="button" type="submit" data-loading-label="Enviando a la mesa...">Enviar novedad</button>
-    <p class="form-status" data-form-status role="status" aria-live="polite">Revisamos cada envío de forma manual.</p>
+    <p class="form-status" data-form-status role="status" aria-live="polite">Tu novedad será revisada a la brevedad.</p>
   </div>
 </form>
 

@@ -10,9 +10,9 @@ const issues = (await getCollection('issues', ({ data }) => !data.draft))
 const latestIssue = issues[0];
 ---
 
-<BaseLayout pageEvent="landing_viewed">
+<BaseLayout pageEvent="landing_viewed" turnstile>
   <section class="hero shell" id="suscribirme" aria-labelledby="hero-title">
-    <h1 id="hero-title">Lo que se está construyendo en la tecnología argentina.</h1>
+    <h1 id="hero-title">Lo que construye el ecosistema emprendedor de <span class="hero__country">Argentina</span></h1>
     <p class="hero__lead">Cada dos viernes, una edición curada a mano: lanzamientos, startups, proyectos indie, comunidad y radar. Sin relleno, sin hype. Las fuentes, siempre a la vista.</p>
     <SubscriptionForm source="hero" />
   </section>
@@ -20,7 +20,6 @@ const latestIssue = issues[0];
   <section class="audience shell" id="para-quien" aria-labelledby="audience-title">
     <div class="audience__intro">
       <div>
-        <p class="audience__label">Para quién es</p>
         <h2 class="section-heading" id="audience-title">Para quienes construyen y necesitan mirar alrededor.</h2>
       </div>
       <p class="section-copy">QEC está pensada primero para founders y operadores que necesitan una vista rápida y confiable de lo que se mueve en la tecnología argentina.</p>
@@ -67,7 +66,7 @@ const latestIssue = issues[0];
         <dl>
           <div><dt>Buscamos</dt><dd>Algo que cambió</dd></div>
           <div><dt>Necesitamos</dt><dd>Una fuente original</dd></div>
-          <div><dt>Revisamos</dt><dd>Cada envío a mano</dd></div>
+          <div><dt>Revisamos</dt><dd>A la brevedad</dd></div>
         </dl>
       </div>
       <StoryForm />
@@ -107,8 +106,9 @@ const latestIssue = issues[0];
   }
 
   .hero h1 {
-    max-width: 790px;
+    max-width: 1060px;
     margin: 0;
+    animation: hero-headline-set 680ms var(--ease-out) both;
     font-family: var(--font-serif);
     font-size: clamp(3.4rem, 7.8vw, 5rem);
     font-weight: 500;
@@ -117,14 +117,38 @@ const latestIssue = issues[0];
     line-height: 0.98;
   }
 
+  .hero__country {
+    color: var(--color-argentina-blue-deep);
+  }
+
   .hero__lead {
     max-width: 62ch;
     margin: 30px 0 32px;
+    animation: hero-detail-set 520ms var(--ease-out) 70ms both;
     color: #514a43;
     font-family: var(--font-serif);
     font-size: clamp(1.1rem, 1.8vw, 1.3rem);
     line-height: 1.55;
     overflow-wrap: anywhere;
+  }
+
+  .hero :global(.subscription-form) {
+    animation: hero-detail-set 520ms var(--ease-out) 140ms both;
+  }
+
+  @keyframes hero-headline-set {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 22% 0);
+      transform: translateY(12px);
+    }
+  }
+
+  @keyframes hero-detail-set {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
   }
 
   .audience {
@@ -140,19 +164,14 @@ const latestIssue = issues[0];
     margin-bottom: 52px;
   }
 
-  .audience__label,
   .audience__role {
     margin: 0;
     color: var(--color-brand-deep);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-  }
-
-  .audience__label {
-    margin-bottom: 14px;
   }
 
   .audience__intro .section-copy {
@@ -220,13 +239,14 @@ const latestIssue = issues[0];
   .audience__secondary strong {
     color: var(--color-brand-deep);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .audience__secondary p {
+    max-width: 62ch;
     margin: 0;
     color: #5f584f;
     font-family: var(--font-serif);
@@ -289,7 +309,7 @@ const latestIssue = issues[0];
   .submit__copy dt {
     color: var(--color-night-muted);
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -339,7 +359,7 @@ const latestIssue = issues[0];
   .archive__issue > span {
     color: var(--color-muted);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
@@ -424,5 +444,19 @@ const latestIssue = issues[0];
       display: none;
     }
 
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1,
+    .hero__lead,
+    .hero :global(.subscription-form) {
+      animation: hero-fade 200ms ease both;
+    }
+
+    @keyframes hero-fade {
+      from {
+        opacity: 0;
+      }
+    }
   }
 </style>

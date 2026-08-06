@@ -14,6 +14,9 @@ colors:
   brand-strong: "#d64a1e"
   brand-deep: "#b23c12"
   brand-hover: "#8f2e0d"
+  argentina-blue-deep: "#215f88"
+  argentina-blue: "#438fbd"
+  argentina-gold: "#a36b00"
   info: "#1f5fa8"
   info-tint: "#e6eef7"
   success: "#2f7a4f"
@@ -196,6 +199,8 @@ La paleta combina neutrales cálidos de publicación con un único acento naranj
 
 **The Orange Has a Job Rule.** El naranja señala marca, acción o un estado editorial nombrado. No se usa como decoración distribuida al azar.
 
+**The Argentina Exception.** La palabra `Argentina` en la declaración principal usa un degradado legible de azul celeste profundo y dorado solar. Es una firma tipográfica puntual, no una nueva paleta distribuida.
+
 **The Explicit State Rule.** Información, éxito, error, demostración y patrocinio se entienden por texto antes que por color.
 
 ## Typography
@@ -243,7 +248,7 @@ El email es una hoja blanca de 600px sobre papel cálido, con 34px de inset late
 
 El sistema es plano y no usa sombras. La profundidad surge del paso entre `paper`, `surface`, `surface-soft`, campos cálidos y superficies nocturnas, más bordes de un píxel. El foco visible es un outline de tinta de 2px con offset de 3px, una señal accesible y no una elevación.
 
-Los únicos movimientos son respuestas breves de estado: botones cambian color en 150ms y filas enlazadas en 140ms. Con `prefers-reduced-motion: reduce`, scroll y transiciones se neutralizan.
+El movimiento principal es una única entrada editorial en la primera carga: el titular se revela como tinta asentándose sobre papel y el texto y formulario continúan con un stagger breve. Usa `clip-path`, opacidad y transform con `cubic-bezier(0.23, 1, 0.32, 1)`; la variante de movimiento reducido conserva solo un fundido corto. Los botones responden al puntero con una compresión de `0.98` durante 140ms y una liberación de 100ms, además de sus cambios de color.
 
 **The Flat Paper Rule.** Si una región necesita separación, usar tono, borde o estructura editorial; no sombra, vidrio ni gradiente.
 
@@ -309,7 +314,7 @@ El email coloca una hoja blanca de 600px sobre papel, abre con cabecera cálida,
 
 - **Don't** hacer que QEC parezca un dashboard de startup, un SaaS genérico o un funnel intercambiable de newsletter.
 - **Don't** recuperar la antigua Bitácora de señales, su papel frío, cobalt/lime, Archivo condensada, esquinas cortadas o grilla de registro.
-- **Don't** usar sombras, glassmorphism, gradientes, blobs, pills o radios mayores a los observados.
+- **Don't** usar sombras, glassmorphism, gradientes decorativos fuera de la firma `Argentina`, blobs, pills o radios mayores a los observados.
 - **Don't** convertir el naranja en relleno decorativo o el azul informativo en una segunda marca.
 - **Don't** copiar el orden de conversión de la landing en archivo, privacidad, edición o email.
 - **Don't** depender de webfonts, hover, movimiento o layouts multicolumna para comunicar significado en email.

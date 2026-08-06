@@ -20,10 +20,13 @@ Landing, archivo editorial y newsletter quincenal para QEC. El MVP usa archivos 
 3. Ejecutá `pnpm email:dev` para previsualizar `src/emails/issue-zero.tsx`.
 4. Ejecutá `pnpm types`, `pnpm check` y `pnpm build` antes de desplegar.
 
+Durante el desarrollo local, Turnstile usa las credenciales de prueba oficiales de Cloudflare. Los builds de producción siempre requieren `TURNSTILE_SECRET_KEY` y usan la site key real.
+
 ## Despliegue
 
 - `pnpm deploy` publica el sitio y sus endpoints en Cloudflare Workers.
 - Producción usa `https://queestanconstruyendo.com`; `workers.dev` y las preview URLs permanecen desactivadas.
+- El Worker procesa primero las rutas y redirige permanentemente `www` al dominio raíz conservando ruta y query string.
 - `SITE_URL` debe coincidir con el hostname publicado antes de construir para generar canonicales y sitemap correctos.
 - Las variables privadas de Resend deben cargarse como Worker Secrets; nunca se incluyen en `wrangler.jsonc`.
 - La site key pública de Turnstile vive en `src/components/Turnstile.astro`; su secreto nunca se incluye en el repositorio.
@@ -62,8 +65,9 @@ La automatización para generar web y email desde una única fuente queda delibe
 - `POST /api/subscribe` crea un contacto en el único listado de Resend.
 - `POST /api/submit-story` envía una novedad a `QEC_EDITOR_EMAIL`.
 - `POST /api/feedback` envía feedback de una edición al mismo buzón.
+- Los tres endpoints validan Turnstile y limitan cada identidad validada a cinco intentos por minuto y acción.
 - El dominio usado por `RESEND_FROM` debe estar verificado en Resend.
-- Los envíos reales deben pasar `replyTo`, una URL de baja válida y los headers de baja de Resend. La plantilla ya muestra Reply-To y el enlace obligatorio en el footer.
+- Los envíos reales deben pasar `replyTo`, una URL de baja válida y los headers de baja de Resend. La plantilla solo muestra el enlace de baja cuando recibe una URL real; nunca genera una dirección ficticia.
 
 ## PostHog
 

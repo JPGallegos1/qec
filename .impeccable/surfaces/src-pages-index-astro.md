@@ -17,6 +17,6 @@ Proof and content: the inclusion criteria, transparent edition-zero demonstratio
 
 Constraints: Spanish for Argentina, subscription and story forms must remain immediately understandable and accessible, every demonstration and sponsor must be labeled, and all operational identities remain environment-configurable.
 
-Direction: user-pinned independent editorial publication. Warm paper and white sheets; Newsreader editorial typography; Hanken Grotesk interface; JetBrains Mono metadata; orange QEC sigla and actions. The first viewport is one quiet editorial statement with an immediately usable subscription form.
+Direction: user-pinned independent editorial publication. Warm paper and white sheets; Newsreader editorial typography; Hanken Grotesk interface; JetBrains Mono metadata; orange QEC sigla and actions. The first viewport is one quiet editorial statement with an immediately usable subscription form. "Argentina" closes the statement in an accessible sky-blue and sun-gold gradient. A single restrained first-load sequence should make the headline feel printed onto the page; routine content remains still.
 
 Unresolved: production domain, public contact address, Resend sender and Reply-To, editor mailbox, PostHog project, and real issue content.

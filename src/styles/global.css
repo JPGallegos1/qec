@@ -18,6 +18,9 @@
   --color-brand-strong: #d64a1e;
   --color-brand-deep: #b23c12;
   --color-brand-tint: #fbece0;
+  --color-argentina-blue-deep: #215f88;
+  --color-argentina-blue: #438fbd;
+  --color-argentina-gold: #a36b00;
 
   --color-info: #1f5fa8;
   --color-info-tint: #e6eef7;
@@ -42,6 +45,7 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   --page: min(1060px, calc(100vw - 48px));
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * {
@@ -120,17 +124,16 @@ select {
 
 .brand-logo {
   display: block;
-  width: 38px;
+  width: 76px;
   height: 38px;
-  overflow: hidden;
 }
 
 .brand-logo img {
   display: block;
-  width: 114px;
+  width: 76px;
   max-width: none;
-  height: 76px;
-  transform: translate(-38px, -16px);
+  height: auto;
+  transform: translateY(-26px);
 }
 
 .site-nav {
@@ -168,7 +171,7 @@ select {
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, transform 100ms var(--ease-out);
 }
 
 .button:hover {
@@ -287,7 +290,7 @@ select {
   padding: 3px 7px;
   background: var(--color-surface-2);
   font-family: var(--font-mono);
-  font-size: 0.625rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.2;
@@ -428,17 +431,23 @@ select {
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .button:active {
+    transform: scale(0.98);
+    transition-duration: 150ms, 140ms;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .button {
+    transition: background-color 150ms ease;
+  }
+
+  .button:active {
+    transform: none;
   }
 }

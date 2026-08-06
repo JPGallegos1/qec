@@ -1,3 +1,5 @@
+import { env } from 'cloudflare:workers';
+
 export const jsonResponse = (body: Record<string, unknown>, status = 200) => new Response(JSON.stringify(body), {
   status,
   headers: {
@@ -40,12 +42,14 @@ export const isSameOrigin = (request: Request) => {
   }
 };
 
-type JsonBodyResult = { body: Record<string, unknown> } | { response: Response };
+type FormBodyResult = { body: Record<string, unknown> } | { response: Response };
 
-export const readJsonBody = async (request: Request, maxBytes = 16_384): Promise<JsonBodyResult> => {
+export const readFormBody = async (request: Request, maxBytes = 16_384): Promise<FormBodyResult> => {
   const contentType = request.headers.get('Content-Type')?.toLowerCase() || '';
-  if (!contentType.startsWith('application/json')) {
-    return { response: jsonResponse({ message: 'El formulario debe enviarse como JSON.' }, 415) } as const;
+  const isJson = contentType.startsWith('application/json');
+  const isUrlEncoded = contentType.startsWith('application/x-www-form-urlencoded');
+  if (!isJson && !isUrlEncoded) {
+    return { response: jsonResponse({ message: 'El formulario tiene un formato no compatible.' }, 415) } as const;
   }
 
   const declaredLength = Number(request.headers.get('Content-Length'));
@@ -80,12 +84,30 @@ export const readJsonBody = async (request: Request, maxBytes = 16_384): Promise
   }
 
   try {
-    const value = JSON.parse(new TextDecoder().decode(bytes)) as unknown;
+    const text = new TextDecoder().decode(bytes);
+    const value = isJson
+      ? JSON.parse(text) as unknown
+      : Object.fromEntries(new URLSearchParams(text));
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Invalid body');
     return { body: value as Record<string, unknown> } as const;
   } catch {
     return { response: jsonResponse({ message: 'El formulario no tiene un formato válido.' }, 400) } as const;
   }
+};
+
+export const hasConsent = (value: unknown) => value === true || value === 'on' || value === 'true';
+
+export const enforceFormRateLimit = async (request: Request, action: string, identity?: string): Promise<Response | null> => {
+  const actor = identity
+    || request.headers.get('CF-Connecting-IP')
+    || request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim()
+    || 'unknown';
+  const actorHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(actor));
+  const key = Array.from(new Uint8Array(actorHash), (byte) => byte.toString(16).padStart(2, '0')).join('');
+  const { success } = await env.FORM_RATE_LIMITER.limit({ key: `${action}:${key}` });
+
+  if (success) return null;
+  return jsonResponse({ message: 'Recibimos demasiados envíos desde esta conexión. Esperá un minuto.' }, 429);
 };
 
 interface TurnstileResult {
@@ -100,7 +122,10 @@ export const verifyTurnstile = async (
   token: unknown,
   expectedAction: string,
 ): Promise<Response | null> => {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const usesTestCredentials = import.meta.env.DEV;
+  const secret = usesTestCredentials
+    ? '1x0000000000000000000000000000000AA'
+    : process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
     return jsonResponse({ message: 'La verificación anti-spam no está disponible temporalmente.' }, 503);
   }
@@ -110,21 +135,24 @@ export const verifyTurnstile = async (
     return jsonResponse({ message: 'Completá la verificación anti-spam.' }, 403);
   }
 
-  const payload = new FormData();
-  payload.set('secret', secret);
-  payload.set('response', responseToken);
+  const payload = new URLSearchParams({ secret, response: responseToken });
   const remoteIp = request.headers.get('CF-Connecting-IP');
   if (remoteIp) payload.set('remoteip', remoteIp);
 
   try {
     const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload,
+      signal: AbortSignal.timeout(10_000),
     });
     const result = await response.json() as TurnstileResult;
     const expectedHostname = new URL(request.url).hostname;
 
-    if (!response.ok || !result.success || result.hostname !== expectedHostname || result.action !== expectedAction) {
+    const invalidMetadata = !usesTestCredentials
+      && (result.hostname !== expectedHostname || result.action !== expectedAction);
+
+    if (!response.ok || !result.success || invalidMetadata) {
       console.warn('Turnstile validation failed', {
         action: result.action,
         errors: result['error-codes'],

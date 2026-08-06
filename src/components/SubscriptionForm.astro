@@ -32,11 +32,10 @@ const { source = 'landing' } = Astro.props;
     </div>
     <button class="button" type="submit" data-loading-label="Suscribiendo...">Suscribirme</button>
   </div>
-  <Turnstile action="subscribe" />
   <div class="sr-only" aria-hidden="true">
-    <label for={`subscription-company-${source}`}>Empresa</label>
     <input id={`subscription-company-${source}`} name="company" type="text" tabindex="-1" autocomplete="off" />
   </div>
+  <Turnstile action="subscribe" id={`turnstile-subscribe-${source}`} />
   <label class="consent">
     <input name="consent" type="checkbox" required />
     <span>Acepto recibir QEC cada 15 días. Sin spam y con baja en un clic.</span>
@@ -62,14 +61,14 @@ const { source = 'landing' } = Astro.props;
   .subscription-form :global(.consent) {
     margin-top: 8px;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.03em;
   }
 
   .subscription-form :global(.form-status) {
     margin-top: 5px;
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
   }
 
   @media (max-width: 520px) {

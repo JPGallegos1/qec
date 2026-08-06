@@ -22,6 +22,17 @@ const issues = defineCollection({
     demo: z.boolean().default(false),
     draft: z.boolean().default(false),
     stories: z.array(story).max(12),
+  }).superRefine((issue, context) => {
+    if (issue.demo) return;
+
+    issue.stories.forEach((entry, index) => {
+      if (entry.sourceUrl) return;
+      context.addIssue({
+        code: 'custom',
+        message: 'Las señales de una edición real deben incluir su fuente original.',
+        path: ['stories', index, 'sourceUrl'],
+      });
+    });
   }),
 });
 
