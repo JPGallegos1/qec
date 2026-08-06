@@ -115,26 +115,22 @@ select {
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
   text-decoration: none;
 }
 
-.wordmark__mark {
-  display: grid;
-  min-width: 34px;
-  height: 24px;
-  place-items: center;
-  border-radius: 5px;
-  padding-inline: 6px;
-  background: var(--color-brand-deep);
-  color: white;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.brand-logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  overflow: hidden;
+}
+
+.brand-logo img {
+  display: block;
+  width: 114px;
+  max-width: none;
+  height: 76px;
+  transform: translate(-38px, -16px);
 }
 
 .site-nav {
@@ -315,30 +311,6 @@ select {
   text-transform: uppercase;
 }
 
-/* cimientos: dos tramos firmes + uno naranja “en obra” */
-.cimientos {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.cimientos i {
-  display: block;
-  width: 26px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--color-ink);
-}
-
-.cimientos i:nth-child(2) {
-  background: var(--color-muted);
-}
-
-.cimientos i:nth-child(3) {
-  width: 13px;
-  background: var(--color-brand);
-}
-
 /* ---------------------------------------------------------------- headings */
 
 .section-heading {
@@ -376,13 +348,10 @@ select {
   padding-block: 26px;
 }
 
-.site-footer p {
-  margin: 0;
-  color: var(--color-muted);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .site-footer nav {

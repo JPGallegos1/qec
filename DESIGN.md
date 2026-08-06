@@ -85,7 +85,6 @@ spacing:
   control-gap: "10px"
   field-gap: "16px"
   paper-inset: "22px"
-  section-mark: "28px"
   email-inset: "34px"
   editorial-inset: "44px"
 components:
@@ -157,7 +156,7 @@ components:
 
 QEC se lee como una publicación independiente argentina: papel cálido alrededor, superficies editoriales blancas, titulares de tinta en serif, acciones naranjas y metadatos monoespaciados. La voz visual es serena, selectiva y material; no debe parecer un dashboard de startup ni un funnel genérico de newsletter.
 
-El sistema cubre web y email. En web, Newsreader aporta autoridad editorial, Hanken Grotesk mantiene legibles las acciones y JetBrains Mono identifica fecha, fuente, categoría y estado. El email conserva esa relación mediante Georgia, Arial y Courier New, sin depender de webfonts. La geometría se construye con reglas finas, campos claros, contenedores de papel y el divisor de tres trazos "cimientos".
+El sistema cubre web y email. En web, Newsreader aporta autoridad editorial, Hanken Grotesk mantiene legibles las acciones y JetBrains Mono identifica fecha, fuente, categoría y estado. El email conserva esa relación mediante Georgia, Arial y Courier New, sin depender de webfonts. La geometría se construye con reglas finas, campos claros y contenedores de papel.
 
 La expresión implementada en la landing sigue el contrato actual: una cabecera silenciosa; una gran declaración Newsreader; el tagline de cadencia inmediatamente después del titular; descripción editorial; formulario de suscripción funcional; criterio de selección; edición demostrativa; envío de novedades. Esa secuencia pertenece a esa superficie y no establece un orden de conversión obligatorio para archivo, privacidad, ediciones ni futuros productos.
 
@@ -167,7 +166,6 @@ La expresión implementada en la landing sigue el contrato actual: una cabecera 
 - Tinta serif para lectura; sans para interfaz; mono para evidencia.
 - Naranja de marca reservado para acciones, estados editoriales y énfasis explícito.
 - Construcción plana mediante bordes de un píxel, cambios tonales y filas numeradas.
-- Dispositivo cimientos: dos trazos firmes y un tercer trazo naranja, corto y "en obra".
 - Traducción de email robusta, monocolumna y basada en fallbacks de sistema.
 
 ## Colors
@@ -251,7 +249,7 @@ Los únicos movimientos son respuestas breves de estado: botones cambian color e
 
 ## Shapes
 
-Las formas son rectangulares y apenas suavizadas. La escala implementada es 2px para trazos de cimientos, 4px para tags, 5px para la sigla, 7px para botones y campos, 8px para avisos, y 10px para hojas y paneles. El botón de email usa una excepción compatible de 6px. Los puntos de criterio son círculos funcionales, no una familia de pills.
+Las formas son rectangulares y apenas suavizadas. La escala implementada es 4px para tags, 5px para la sigla, 7px para botones y campos, 8px para avisos, y 10px para hojas y paneles. El botón de email usa una excepción compatible de 6px. Los puntos de criterio son círculos funcionales, no una familia de pills.
 
 **The Small Radius Rule.** La suavidad nunca debe volver al sistema blando o app-like. Contenedores grandes se detienen en 10px y controles en 7px.
 
@@ -288,17 +286,13 @@ Las formas son rectangulares y apenas suavizadas. La escala implementada es 2px 
 
 La cabecera es silenciosa, de 64px (58px en compacto), sobre papel y con una regla inferior. La marca combina la sigla QEC en `brand-deep` con texto blanco y el nombre completo; enlaces Hanken discretos pasan a naranja en hover. En móvil se preserva la marca y la acción relevante, se reduce la navegación y finalmente se oculta antes de envolverla.
 
-### Cimientos
-
-El dispositivo distintivo usa tres trazos de 3px de alto con radio de 2px y gap de 5px: 26px de tinta, 26px `muted-visual` y 13px naranja. Sobre noche, cambia a `night-ink`, `night-muted` y `night-brand`. Funciona como firma editorial y separador de sección, no como icono de botón ni decoración repetitiva.
-
 ### Issue Sheet / Signal Record
 
 La hoja de edición combina estado explícito, título Newsreader, metadatos mono, índices tabulares naranjas, categorías, resúmenes y disclosure de patrocinio. En móvil el índice baja de 72px a 44px y la cabecera apila sus columnas. La edición cero siempre permanece rotulada como demostración.
 
 ### Email Frame
 
-El email coloca una hoja blanca de 600px sobre papel, abre con cabecera cálida, ordena historias con reglas, inserta disclosure patrocinado tintado, usa participación nocturna y cierra sobre `night-surface`. Reply-To, baja, demostración y patrocinio son visibles. Los radios, tamaños y fallbacks documentados son deliberados para clientes de correo.
+El email coloca una hoja blanca de 600px sobre papel, abre con cabecera cálida, ordena historias con reglas, usa participación nocturna y cierra sobre `night-surface`. Reply-To, baja y demostración son visibles. Los radios, tamaños y fallbacks documentados son deliberados para clientes de correo.
 
 ## Do's and Don'ts
 
@@ -308,7 +302,6 @@ El email coloca una hoja blanca de 600px sobre papel, abre con cabecera cálida,
 - **Do** preservar etiquetas pequeñas solo en funciones breves de evidencia y estado; mantener el cuerpo de lectura en tamaños editoriales.
 - **Do** construir jerarquía con ritmo, reglas, filas numeradas, medidas de lectura y cambios tonales.
 - **Do** traducir la identidad al email con Georgia, Arial y Courier New, una columna y estilos compatibles.
-- **Do** usar cimientos con sus dos trazos firmes y el tercero naranja corto.
 - **Do** mantener demostración, patrocinio, consentimiento, éxito y error explícitos en palabras.
 - **Do** separar `muted` para texto secundario de `muted-visual` para bordes y decoración.
 

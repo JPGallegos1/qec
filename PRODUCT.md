@@ -42,9 +42,9 @@ The editor gathers sources over each fortnight, receives community submissions, 
 
 The public name is "Que Estan Construyendo"; QEC is its operational abbreviation. Product language is Argentine Spanish and uses direct local forms such as "envia" and "contanos". The voice is concise, specific, skeptical of hype, respectful of readers' time, and explicit when content is sponsored.
 
-The visual identity is pinned to a warm independent-publication system: paper `#FAF6EF`, ink `#1C1815`, orange `#E5571F`, Newsreader for editorial text, Hanken Grotesk for interface text, JetBrains Mono for dates and sources, and a three-stroke "cimientos" divider with two firm strokes and one short orange stroke. The public wordmark combines the full name with an orange QEC sigla.
+The visual identity is pinned to a warm independent-publication system: paper `#FAF6EF`, ink `#1C1815`, orange `#E5571F`, Newsreader for editorial text, Hanken Grotesk for interface text, and JetBrains Mono for dates and sources. The public wordmark combines the full name with an orange QEC sigla.
 
-The initial sponsor offer is a single "sponsor fundador": placement after the introduction for three issues, explicitly labeled, with a basic click report, for USD 50 total. This validates a transaction and is not a performance promise or permanent price.
+Sponsorship is deferred while QEC builds its initial community. The public site and edition-zero email do not include sponsor offers or commercial calls to action.
 
 ## Evidence on Hand
 

@@ -102,13 +102,6 @@ export function IssueEmail({
             <Text style={styles.lead}>{intro}</Text>
           </Section>
 
-          <Section className="qec-pad" style={styles.sponsor}>
-            <Text style={styles.sponsorLabel}>CONTENIDO PATROCINADO · SPONSOR FUNDADOR</Text>
-            <Heading as="h2" style={styles.sponsorTitle}>Este espacio espera a su primer sponsor.</Heading>
-            <Text style={styles.sponsorText}>Tres ediciones, ubicación después de la introducción y un reporte básico de clics. USD 50 total para validar apoyo temprano, no una promesa de resultados masivos.</Text>
-            <Link href={`mailto:${replyTo}?subject=Sponsor%20fundador%20QEC`} style={styles.textLink}>Consultar disponibilidad</Link>
-          </Section>
-
           {stories.map((story, index) => (
             <Section className="qec-pad" style={styles.story} key={`${story.title}-${index}`}>
               <Text style={styles.category}>
@@ -155,10 +148,6 @@ const styles: Record<string, React.CSSProperties> = {
   demo: { display: 'inline-block', margin: '0 0 20px', padding: '5px 8px', borderRadius: '4px', backgroundColor: '#fbece0', color: '#b23c12', fontFamily: 'Courier New, monospace', fontSize: '9px', fontWeight: 700, letterSpacing: '0.7px' },
   title: { margin: '0 0 24px', fontFamily: 'Georgia, Times New Roman, serif', fontSize: '50px', fontWeight: 400, letterSpacing: '-2px', lineHeight: '50px' },
   lead: { margin: 0, color: '#5f584f', fontFamily: 'Georgia, Times New Roman, serif', fontSize: '18px', lineHeight: '29px' },
-  sponsor: { padding: '28px 34px', backgroundColor: '#fbece0', borderTop: '1px solid #efd8c8', borderBottom: '1px solid #efd8c8' },
-  sponsorLabel: { margin: '0 0 13px', color: '#b23c12', fontFamily: 'Courier New, monospace', fontSize: '9px', fontWeight: 700, letterSpacing: '0.8px' },
-  sponsorTitle: { margin: '0 0 10px', fontFamily: 'Georgia, Times New Roman, serif', fontSize: '25px', fontWeight: 400, lineHeight: '29px' },
-  sponsorText: { margin: '0 0 12px', color: '#654d40', fontFamily: 'Georgia, Times New Roman, serif', fontSize: '14px', lineHeight: '22px' },
   story: { padding: '34px', borderBottom: '1px solid #e7dfd1' },
   category: { margin: '0 0 12px', color: '#d64a1e', fontFamily: 'Courier New, monospace', fontSize: '9px', fontWeight: 700, letterSpacing: '0.8px' },
   storyTitle: { margin: '0 0 10px', fontFamily: 'Georgia, Times New Roman, serif', fontSize: '25px', fontWeight: 400, lineHeight: '30px', letterSpacing: '-0.4px' },
