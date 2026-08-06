@@ -4,6 +4,7 @@ import '@fontsource-variable/hanken-grotesk';
 import '@fontsource-variable/jetbrains-mono';
 import { Image } from 'astro:assets';
 import logo from '../assets/logo-qec.png';
+import Turnstile from '../components/Turnstile.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -101,6 +102,7 @@ const structuredData = {
         </nav>
       </div>
     </footer>
+    {turnstile && <Turnstile />}
     <script>
       import '../scripts/site';
     </script>

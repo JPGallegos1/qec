@@ -19,7 +19,9 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist",
-    "run_worker_first": true
+    // Boolean `true` breaks local Vite (`/@vite/client`, `/src/**` → 404).
+    // Only API routes need the Worker ahead of assets.
+    "run_worker_first": ["/api/*"]
   },
   "ratelimits": [
     {

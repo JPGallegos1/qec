@@ -1,38 +1,38 @@
 ---
-interface Props {
-  action: 'subscribe' | 'submit-story' | 'feedback';
-  id: string;
-  theme?: 'light' | 'dark';
-}
-
-const { action, id, theme = 'light' } = Astro.props;
 const siteKey = import.meta.env.DEV
   ? '1x00000000000000000000AA'
   : '0x4AAAAAAEHhbScpm_ANo5Vj';
 ---
 
-<div class="turnstile-field">
+<div class="turnstile-host" data-turnstile-host>
   <div
-    id={id}
+    id="turnstile-shared"
     class="cf-turnstile"
     data-turnstile
     data-sitekey={siteKey}
-    data-action={action}
-    data-theme={theme}
-    data-size="compact"
+    data-action="qec-form"
+    data-theme="auto"
+    data-size="normal"
+    data-execution="execute"
     data-appearance="interaction-only"
   ></div>
   <noscript><p>Necesitás JavaScript para completar la verificación anti-spam.</p></noscript>
 </div>
 
 <style>
-  .turnstile-field,
-  .turnstile-field :global([data-turnstile]) {
-    width: 100%;
+  .turnstile-host {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 40;
+    width: min(304px, calc(100vw - 32px));
   }
 
-  .turnstile-field :global(p) {
+  .turnstile-host :global(p) {
     margin: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
     color: var(--color-muted);
     font-size: 0.75rem;
   }

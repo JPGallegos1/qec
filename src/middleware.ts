@@ -1,7 +1,9 @@
 import { defineMiddleware } from 'astro:middleware';
 import { createSecurityHeaders } from './lib/security-headers.mjs';
 
-const securityHeaders = createSecurityHeaders(import.meta.env.PUBLIC_POSTHOG_HOST);
+const securityHeaders = createSecurityHeaders(import.meta.env.PUBLIC_POSTHOG_HOST, {
+  upgradeInsecureRequests: !import.meta.env.DEV,
+});
 
 export const onRequest = defineMiddleware(async ({ request }, next) => {
   const requestUrl = new URL(request.url);

@@ -1,6 +1,4 @@
 ---
-import Turnstile from './Turnstile.astro';
-
 interface Props {
   source?: string;
 }
@@ -15,6 +13,7 @@ const { source = 'landing' } = Astro.props;
   data-qec-form="subscription"
   data-start-event="subscription_started"
   data-complete-event="subscription_completed"
+  onsubmit="return false"
 >
   <input type="hidden" name="source" value={source} />
   <div class="subscription-form__row">
@@ -35,7 +34,6 @@ const { source = 'landing' } = Astro.props;
   <div class="sr-only" aria-hidden="true">
     <input id={`subscription-company-${source}`} name="company" type="text" tabindex="-1" autocomplete="off" />
   </div>
-  <Turnstile action="subscribe" id={`turnstile-subscribe-${source}`} />
   <label class="consent">
     <input name="consent" type="checkbox" required />
     <span>Acepto recibir QEC cada 15 días. Sin spam y con baja en un clic.</span>
