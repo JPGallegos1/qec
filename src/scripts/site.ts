@@ -1,5 +1,13 @@
 import posthog from 'posthog-js';
 
+declare global {
+  interface Window {
+    turnstile?: {
+      reset: () => void;
+    };
+  }
+}
+
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
 
 if (posthogKey) {
@@ -34,6 +42,13 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
     event.preventDefault();
     if (!status || !button) return;
 
+    const turnstileToken = form.querySelector<HTMLInputElement>('[name="cf-turnstile-response"]')?.value;
+    if (!turnstileToken) {
+      status.dataset.state = 'error';
+      status.textContent = 'Completá la verificación anti-spam antes de enviar.';
+      return;
+    }
+
     const idleLabel = button.textContent || 'Enviar';
     button.disabled = true;
     button.textContent = button.dataset.loadingLabel || 'Enviando...';
@@ -49,7 +64,12 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
-      const result = await response.json() as { message?: string };
+      const isJson = response.headers.get('Content-Type')?.includes('application/json');
+      const result = isJson ? await response.json() as { message?: string } : {};
+
+      if (response.status === 429) {
+        throw new Error('Recibimos demasiados envíos desde esta conexión. Esperá unos segundos.');
+      }
 
       if (!response.ok) throw new Error(result.message || 'No pudimos procesar el envío.');
 
@@ -64,6 +84,7 @@ document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => 
         ? `${error.message} Probá nuevamente.`
         : 'No pudimos procesar el envío. Probá nuevamente.';
     } finally {
+      window.turnstile?.reset();
       button.disabled = false;
       button.textContent = idleLabel;
     }

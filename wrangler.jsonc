@@ -4,7 +4,18 @@
   "main": "@astrojs/cloudflare/entrypoints/server",
   "compatibility_date": "2026-08-05",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  "workers_dev": true,
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "queestanconstruyendo.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.queestanconstruyendo.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist"

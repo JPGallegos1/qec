@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL || 'https://qec.jpgallegos20.workers.dev',
+  site: process.env.SITE_URL || 'https://queestanconstruyendo.com',
   vite: {
     plugins: [tailwindcss()]
   },
