@@ -7,8 +7,10 @@ declare global {
   }
 }
 
+type AnalyticsProperties = Record<string, string | number | boolean | undefined>;
+
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
-let capture = (_eventName?: string, _properties?: Record<string, string>) => {};
+let capture = (_eventName?: string, _properties?: AnalyticsProperties) => {};
 
 // Static Assets don't hit middleware when run_worker_first is only `/api/*`.
 // Bounce www → apex in the client so forms and Turnstile always run on the canonical host.
@@ -56,21 +58,42 @@ const obtainTurnstileToken = async () => {
   return waitForTurnstileToken();
 };
 
+const classifyFormError = (error: unknown, status?: number) => {
+  if (status === 429) return 'rate_limit';
+  if (error instanceof Error && error.message.includes('anti-spam')) return 'turnstile';
+  if (status && status >= 400) return 'api';
+  return 'unknown';
+};
+
+const bindStorySummaryCount = () => {
+  const summary = document.getElementById('story-summary') as HTMLTextAreaElement | null;
+  const counter = document.getElementById('story-summary-count');
+  if (!summary || !counter) return;
+
+  const max = summary.maxLength;
+  const update = () => {
+    counter.textContent = `${summary.value.length} / ${max} caracteres`;
+  };
+
+  summary.addEventListener('input', update);
+  update();
+};
+
 const bindForms = () => {
   document.querySelectorAll<HTMLFormElement>('[data-qec-form]').forEach((form) => {
     let started = false;
     const status = form.querySelector<HTMLElement>('[data-form-status]');
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const endpoint = form.getAttribute('action') || '/';
-    const analyticsProperties = {
+    const analyticsProperties = (): AnalyticsProperties => ({
       form: form.dataset.qecForm || 'unknown',
       source: form.querySelector<HTMLInputElement>('[name="source"]')?.value || window.location.pathname,
-    };
+    });
 
     form.addEventListener('focusin', () => {
       if (started) return;
       started = true;
-      capture(form.dataset.startEvent, analyticsProperties);
+      capture(form.dataset.startEvent, analyticsProperties());
     });
 
     form.addEventListener('submit', async (event) => {
@@ -78,9 +101,20 @@ const bindForms = () => {
       event.stopPropagation();
       if (!status || !button) return;
 
+      if (!form.reportValidity()) {
+        capture('form_error', {
+          ...analyticsProperties(),
+          error_type: 'validation',
+          status: 0,
+        });
+        return;
+      }
+
       const idleLabel = button.textContent || 'Enviar';
       button.disabled = true;
       status.dataset.state = 'loading';
+
+      let responseStatus = 0;
 
       try {
         button.textContent = 'Verificando...';
@@ -98,6 +132,7 @@ const bindForms = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(values),
         });
+        responseStatus = response.status;
         const isJson = response.headers.get('Content-Type')?.includes('application/json');
         const result = isJson ? await response.json() as { message?: string } : {};
 
@@ -109,7 +144,7 @@ const bindForms = () => {
 
         status.dataset.state = 'success';
         status.textContent = result.message || 'Listo. Gracias por participar.';
-        capture(form.dataset.completeEvent, analyticsProperties);
+        capture(form.dataset.completeEvent, analyticsProperties());
         form.reset();
         started = false;
       } catch (error) {
@@ -117,6 +152,11 @@ const bindForms = () => {
         status.textContent = error instanceof Error
           ? `${error.message} Probá nuevamente.`
           : 'No pudimos procesar el envío. Probá nuevamente.';
+        capture('form_error', {
+          ...analyticsProperties(),
+          error_type: classifyFormError(error, responseStatus),
+          status: responseStatus,
+        });
       } finally {
         if (sharedTurnstile) window.turnstile?.reset(sharedTurnstile);
         button.disabled = false;
@@ -128,6 +168,7 @@ const bindForms = () => {
 
 if (!onWww) {
   bindForms();
+  bindStorySummaryCount();
 
   void import('posthog-js').then(({ default: posthog }) => {
     if (!posthogKey) return;
@@ -145,15 +186,27 @@ if (!onWww) {
         advanced_disable_flags: true,
       });
 
-      capture = (eventName?: string, properties?: Record<string, string>) => {
+      capture = (eventName?: string, properties?: AnalyticsProperties) => {
         if (eventName) posthog.capture(eventName, properties);
       };
 
-      capture('$pageview', {
-        path: window.location.pathname,
-        referrer: document.referrer,
-      });
-      capture(document.body.dataset.pageEvent, { path: window.location.pathname });
+      const pageviewKey = `qec:pageview:${window.location.pathname}`;
+      if (!sessionStorage.getItem(pageviewKey)) {
+        sessionStorage.setItem(pageviewKey, '1');
+        capture('$pageview', {
+          $host: window.location.hostname,
+          $pathname: window.location.pathname,
+          referrer: document.referrer || undefined,
+        });
+
+        const pageEvent = document.body.dataset.pageEvent;
+        if (pageEvent) {
+          capture(pageEvent, {
+            $host: window.location.hostname,
+            $pathname: window.location.pathname,
+          });
+        }
+      }
     } catch (error) {
       console.warn('PostHog no pudo inicializarse', error);
     }

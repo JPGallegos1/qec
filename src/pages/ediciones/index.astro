@@ -6,7 +6,7 @@ const issues = (await getCollection('issues', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
 
-<BaseLayout title="Ediciones" description="Archivo de ediciones de Qué Están Construyendo.">
+<BaseLayout title="Ediciones" description="Archivo de ediciones de Qué Están Construyendo." pageEvent="archive_viewed">
   <section class="archive-page shell">
     <header>
       <h1>Ediciones</h1>

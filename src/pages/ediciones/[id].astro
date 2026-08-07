@@ -16,7 +16,7 @@ const { issue } = Astro.props;
 const { Content } = await render(issue);
 ---
 
-<BaseLayout title={issue.data.title} description={issue.data.description} turnstile>
+<BaseLayout title={issue.data.title} description={issue.data.description} pageEvent="issue_viewed" turnstile>
   <article class="issue-page shell">
     <a class="issue-page__back" href="/ediciones/">Volver al archivo</a>
     <div class="issue-page__intro prose">
@@ -28,7 +28,7 @@ const { Content } = await render(issue);
         <h2 id="feedback-title">¿Esta edición te ahorró tiempo?</h2>
         <p>Una línea alcanza. Leemos cada respuesta para ajustar la próxima selección.</p>
       </div>
-      <form action="/api/feedback" method="post" data-qec-form="feedback" data-complete-event="feedback_submitted" onsubmit="return false">
+      <form action="/api/feedback" method="post" data-qec-form="feedback" data-start-event="feedback_started" data-complete-event="feedback_submitted" onsubmit="return false">
         <input type="hidden" name="issue" value={issue.id} />
         <div class="field">
           <label for="feedback-email">Tu email (opcional)</label>

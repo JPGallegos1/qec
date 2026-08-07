@@ -39,7 +39,9 @@
   </div>
   <div class="field">
     <label for="story-summary">¿Qué pasó concretamente?</label>
-    <textarea id="story-summary" name="summary" maxlength="1200" placeholder="Contanos qué lanzaron, avanzaron o aprendieron. Incluí fecha y contexto argentino." required></textarea>
+    <p class="field-hint" id="story-summary-hint">Dos o tres líneas alcanzan: qué pasó, cuándo y por qué importa para la escena argentina.</p>
+    <textarea id="story-summary" name="summary" maxlength="1200" placeholder="Ej.: lanzaron un beta en Córdoba, cerraron ronda seed, o publicaron un post con métricas concretas." required aria-describedby="story-summary-hint story-summary-count"></textarea>
+    <p class="field-meta" id="story-summary-count" aria-live="polite">Hasta 1200 caracteres.</p>
   </div>
   <div class="sr-only" aria-hidden="true">
     <input id="story-role" name="role" type="text" tabindex="-1" autocomplete="off" />
@@ -50,7 +52,7 @@
   </label>
   <div class="story-form__submit">
     <button class="button" type="submit" data-loading-label="Enviando a la mesa...">Enviar novedad</button>
-    <p class="form-status" data-form-status role="status" aria-live="polite">Tu novedad será revisada a la brevedad.</p>
+    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
   </div>
 </form>
 
@@ -79,6 +81,17 @@
   .story-form :global(.field label),
   .story-form :global(.consent) {
     color: var(--color-night-muted);
+  }
+
+  .story-form :global(.field-hint),
+  .story-form :global(.field-meta) {
+    margin: 4px 0 0;
+    font-size: 0.875rem;
+    color: var(--color-night-muted);
+  }
+
+  .story-form :global(.field-meta) {
+    text-align: right;
   }
 
   .story-form :global(.field input),
