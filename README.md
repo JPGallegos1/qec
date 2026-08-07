@@ -72,13 +72,34 @@ La automatización para generar web y email desde una única fuente queda delibe
 
 ## PostHog
 
-La web emite los seis eventos definidos por el MVP:
+La web emite eventos de página, conversión y errores de formulario:
 
-- `landing_viewed`
-- `subscription_started`
-- `subscription_completed`
-- `story_submission_started`
-- `story_submitted`
-- `feedback_submitted`
+**Vistas de página**
+
+- `$pageview` — todas las rutas (una vez por carga de documento)
+- `landing_viewed` — home (`/`)
+- `archive_viewed` — archivo (`/ediciones/`)
+- `issue_viewed` — edición individual (`/ediciones/[id]/`)
+- `privacy_viewed` — privacidad (`/privacidad/`)
+
+**Formularios**
+
+- `subscription_started` / `subscription_completed`
+- `story_submission_started` / `story_submitted`
+- `feedback_started` / `feedback_submitted`
+- `form_error` — fallos de validación, Turnstile o API (props: `form`, `source`, `error_type`, `status`; sin PII)
+
+**Propiedades comunes**
+
+- `$host`, `$pathname` en pageviews
+- `form` y `source` en eventos de formulario
+
+**Operación**
+
+- Dashboard operativo: [QEC — Operación semanal](https://us.posthog.com/project/242530/dashboard/1969876) (revisar a los 7 días de cada edición)
+- PostHog filtra tráfico interno y de preview (`localhost`, `127.0.0.1`, hosts `*.workers.dev` y `*.pages.dev`); los insights nuevos excluyen test users por defecto
+- Métricas de email (opens, clics, rebotes) siguen en Resend, no en PostHog
+- Rotar la API key personal del MCP si se expuso; preferir OAuth en Cursor o una key con scope MCP en [User API keys](https://us.posthog.com/settings/user-api-keys)
+- Preview de Cloudflare se separa por `$host` en eventos y por filtros de test users en PostHog
 
 La configuración inicial es anónima, sin perfiles persistentes ni grabación de sesiones.
