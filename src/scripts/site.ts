@@ -135,12 +135,14 @@ if (!onWww) {
     try {
       posthog.init(posthogKey, {
         api_host: import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-        ui_host: 'https://us.posthog.com',
         capture_pageview: false,
         capture_pageleave: false,
         disable_session_recording: true,
         person_profiles: 'never',
         persistence: 'memory',
+        debug: false,
+        // /flags loads toolbar auth; the event debugger pauses on capture() in production.
+        advanced_disable_flags: true,
       });
 
       capture = (eventName?: string, properties?: Record<string, string>) => {
